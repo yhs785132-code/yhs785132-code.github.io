@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="page_title">SAM | About</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:#faf8f5;color:#2c2c2c;min-height:100vh;line-height:1.8}
+::selection{background:#1a3a5c22;color:#1a3a5c}
+.top-bar{background:#fff;border-bottom:3px solid #1a3a5c;padding:18px 0;position:sticky;top:0;z-index:100}
+.top-bar .inner{max-width:900px;margin:0 auto;padding:0 28px;display:flex;justify-content:space-between;align-items:center}
+.top-bar .name{font-size:1.2rem;font-weight:700;color:#1a3a5c;letter-spacing:1px;text-transform:uppercase}
+.top-bar .nav{display:flex;gap:20px;align-items:center}
+.top-bar .nav a{color:#555;text-decoration:none;font-size:0.8rem;letter-spacing:0.5px;text-transform:uppercase;transition:color 0.2s;font-family:'Helvetica Neue',Arial,sans-serif}
+.top-bar .nav a:hover{color:#1a3a5c}
+.lang-btn{background:none;border:1px solid #ccc;color:#555;padding:3px 10px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:0.7rem;letter-spacing:1px;cursor:pointer;transition:all 0.2s;text-transform:uppercase}
+.lang-btn:hover{border-color:#1a3a5c;color:#1a3a5c}
+.hero{max-width:900px;margin:0 auto;padding:50px 28px 30px}
+.hero h1{font-size:2.2rem;font-weight:700;color:#1a3a5c;letter-spacing:1px;border-bottom:2px solid #1a3a5c;padding-bottom:10px;margin-bottom:6px}
+.hero .affil{font-size:0.85rem;color:#666;margin-bottom:4px}
+.content{max-width:900px;margin:0 auto;padding:0 28px 60px}
+.section{margin:36px 0}
+.section h2{font-size:1.1rem;font-weight:700;color:#1a3a5c;text-transform:uppercase;letter-spacing:2px;border-bottom:1px solid #ddd;padding-bottom:6px;margin-bottom:16px}
+.edu-item{margin-bottom:20px;padding-left:2px}
+.edu-item .degree{font-weight:700;font-size:1rem;color:#333}
+.edu-item .school{font-size:0.9rem;color:#555}
+.edu-item .period{font-size:0.75rem;color:#999;font-family:'Helvetica Neue',Arial,sans-serif;margin-top:2px}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.badge{padding:4px 14px;border:1px solid #ddd;border-radius:2px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:0.72rem;color:#555;transition:all 0.2s;background:#fff;letter-spacing:0.3px}
+.badge:hover{border-color:#1a3a5c;color:#1a3a5c;background:#f0f4f8}
+.profile-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:4px 0 8px}
+.profile-item{padding:4px 0}
+.profile-item .label{font-size:0.72rem;color:#999;text-transform:uppercase;letter-spacing:1px;font-family:'Helvetica Neue',Arial,sans-serif}
+.profile-item .value{font-size:0.9rem;color:#444;margin-top:2px}
+footer{text-align:center;padding:24px 0;margin-top:30px;border-top:1px solid #eee;color:#aaa;font-size:0.7rem;font-family:'Helvetica Neue',Arial,sans-serif}
+footer a{color:#888;text-decoration:none;margin:0 6px}
+footer a:hover{color:#1a3a5c}
+@media(max-width:600px){.top-bar .inner{flex-direction:column;gap:10px}.hero h1{font-size:1.6rem}}
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="inner">
+    <div class="name">SAM<span style="font-weight:300;color:#999;margin-left:4px">| Student</span></div>
+    <div class="nav">
+      <a href="index.html" data-i18n="nav_home">Home</a>
+      <a href="about.html" data-i18n="nav_about">About</a>
+      <a href="anime.html" data-i18n="nav_anime">Anime</a>
+      <button class="lang-btn" id="langToggle">中</button>
+    </div>
+  </div>
+</div>
+
+<div class="hero">
+  <h1 data-i18n="hero_name">SAM</h1>
+  <div class="affil" data-i18n="hero_affil">Student | Nanjing University → Peking University</div>
+</div>
+
+<div class="content">
+  <div class="section">
+    <h2 data-i18n="sec_profile">Profile</h2>
+    <div class="profile-grid">
+      <div class="profile-item"><div class="label" data-i18n="pro_name_label">Name</div><div class="value">SAM</div></div>
+      <div class="profile-item"><div class="label" data-i18n="pro_birth_label">Date of Birth</div><div class="value">2004</div></div>
+      <div class="profile-item"><div class="label" data-i18n="pro_loc_label">Location</div><div class="value" data-i18n="pro_loc_val">Nanjing / Beijing</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 data-i18n="sec_edu">Education</h2>
+    <div class="edu-item">
+      <div class="degree" data-i18n="edu1_title">工学学士</div>
+      <div class="school" data-i18n="edu1_school">南京大学</div>
+      <div class="period">2022 — 2026</div>
+    </div>
+    <div class="edu-item">
+      <div class="degree" data-i18n="edu2_title">工学硕士</div>
+      <div class="school" data-i18n="edu2_school">北京大学</div>
+      <div class="period">2026 — Present</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 data-i18n="sec_research">Research Interests</h2>
+    <div class="badges">
+      <span class="badge">IC Design</span><span class="badge">CMOS Analog</span><span class="badge">VLSI</span>
+      <span class="badge">MEMS</span><span class="badge">FPGA</span><span class="badge">Mixed-Signal</span>
+      <span class="badge">Signal Processing</span><span class="badge">Embedded Systems</span>
+      <span class="badge">Semiconductor Physics</span><span class="badge">ASIC Design</span>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2026 SAM</p>
+  <p style="margin-top:4px"><a href="index.html">Home</a><a href="about.html">About</a><a href="anime.html">Anime</a></p>
+</footer>
+
+<script>
+const i18n={
+  zh:{page_title:'SAM | 关于',nav_home:'首页',nav_about:'关于',nav_anime:'番剧',
+    hero_name:'SAM',hero_affil:'学生 | 南京大学 → 北京大学',
+    sec_profile:'基本信息',pro_name_label:'姓名',pro_birth_label:'出生',pro_loc_label:'坐标',pro_loc_val:'南京 / 北京',
+    sec_edu:'教育经历',edu1_title:'工学学士',edu1_school:'南京大学',edu2_title:'工学硕士',edu2_school:'北京大学',
+    sec_research:'研究方向'},
+  en:{page_title:'SAM | About',nav_home:'Home',nav_about:'About',nav_anime:'Anime',
+    hero_name:'SAM',hero_affil:'Student | Nanjing University → Peking University',
+    sec_profile:'Profile',pro_name_label:'Name',pro_birth_label:'Date of Birth',pro_loc_label:'Location',pro_loc_val:'Nanjing / Beijing',
+    sec_edu:'Education',edu1_title:'B.Eng.',edu1_school:'Nanjing University',edu2_title:'M.Eng.',edu2_school:'Peking University',
+    sec_research:'Research Interests'}
+};
+function applyLang(l){localStorage.setItem('sam_lang',l);document.getElementById('langToggle').textContent=l==='zh'?'中':'EN';document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(i18n[l]&&i18n[l][k]) el.innerHTML=i18n[l][k]})}
+const sl=localStorage.getItem('sam_lang')||'zh';document.getElementById('langToggle').textContent=sl==='zh'?'中':'EN';
+document.getElementById('langToggle').addEventListener('click',()=>{const c=localStorage.getItem('sam_lang')||'zh';applyLang(c==='zh'?'en':'zh')});
+setTimeout(()=>applyLang(sl),10);
+</script>
+</body>
+</html>
