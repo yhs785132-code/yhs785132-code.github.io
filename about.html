@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -43,19 +43,20 @@ footer a:hover{color:#1a3a5c}
 <body>
 <div class="top-bar">
   <div class="inner">
-    <div class="name">SAM<span style="font-weight:300;color:#999;margin-left:4px">| Student</span></div>
+    <div class="name">SAM<span style="font-weight:300;color:#999;margin-left:4px">| <span data-i18n="top_student">Student</span></span></div>
     <div class="nav">
       <a href="index.html" data-i18n="nav_home">Home</a>
       <a href="about.html" data-i18n="nav_about">About</a>
       <a href="anime.html" data-i18n="nav_anime">Anime</a>
-      <button class="lang-btn" id="langToggle">中</button>
+      <a href="games.html" data-i18n="nav_games">Games</a>
+      <button class="lang-btn" id="langToggle">涓�</button>
     </div>
   </div>
 </div>
 
 <div class="hero">
   <h1 data-i18n="hero_name">SAM</h1>
-  <div class="affil" data-i18n="hero_affil">Student | Nanjing University → Peking University</div>
+  <div class="affil" data-i18n="hero_affil">Student | Nanjing University 鈫� Peking University</div>
 </div>
 
 <div class="content">
@@ -71,48 +72,48 @@ footer a:hover{color:#1a3a5c}
   <div class="section">
     <h2 data-i18n="sec_edu">Education</h2>
     <div class="edu-item">
-      <div class="degree" data-i18n="edu1_title">工学学士</div>
-      <div class="school" data-i18n="edu1_school">南京大学</div>
-      <div class="period">2022 — 2026</div>
+      <div class="degree" data-i18n="edu1_title">宸ュ瀛﹀＋</div>
+      <div class="school" data-i18n="edu1_school">鍗椾含澶у</div>
+      <div class="period">2022 鈥� 2026</div>
     </div>
     <div class="edu-item">
-      <div class="degree" data-i18n="edu2_title">工学硕士</div>
-      <div class="school" data-i18n="edu2_school">北京大学</div>
-      <div class="period">2026 — Present</div>
+      <div class="degree" data-i18n="edu2_title">宸ュ纭曞＋</div>
+      <div class="school" data-i18n="edu2_school">鍖椾含澶у</div>
+      <div class="period">2026 鈥� <span data-i18n="edu2_period_present">鑷充粖</span></div>
     </div>
   </div>
 
   <div class="section">
     <h2 data-i18n="sec_research">Research Interests</h2>
     <div class="badges">
-      <span class="badge">IC Design</span><span class="badge">CMOS Analog</span><span class="badge">VLSI</span>
-      <span class="badge">MEMS</span><span class="badge">FPGA</span><span class="badge">Mixed-Signal</span>
-      <span class="badge">Signal Processing</span><span class="badge">Embedded Systems</span>
-      <span class="badge">Semiconductor Physics</span><span class="badge">ASIC Design</span>
+      <span class="badge" data-i18n="badge_ic">IC Design</span><span class="badge" data-i18n="badge_cmos">CMOS Analog</span><span class="badge" data-i18n="badge_vlsi">VLSI</span>
+      <span class="badge" data-i18n="badge_mems">MEMS</span><span class="badge" data-i18n="badge_fpga">FPGA</span><span class="badge" data-i18n="badge_mixed">Mixed-Signal</span>
+      <span class="badge" data-i18n="badge_signal">Signal Processing</span><span class="badge" data-i18n="badge_embedded">Embedded Systems</span>
+      <span class="badge" data-i18n="badge_semi">Semiconductor Physics</span><span class="badge" data-i18n="badge_asic">ASIC Design</span>
     </div>
   </div>
 </div>
 
 <footer>
   <p>&copy; 2026 SAM</p>
-  <p style="margin-top:4px"><a href="index.html">Home</a><a href="about.html">About</a><a href="anime.html">Anime</a></p>
+  <p style="margin-top:4px"><a href="index.html">Home</a><a href="about.html">About</a><a href="anime.html">Anime</a><a href="games.html">Games</a></p>
 </footer>
 
 <script>
 const i18n={
-  zh:{page_title:'SAM | 关于',nav_home:'首页',nav_about:'关于',nav_anime:'番剧',
-    hero_name:'SAM',hero_affil:'学生 | 南京大学 → 北京大学',
-    sec_profile:'基本信息',pro_name_label:'姓名',pro_birth_label:'出生',pro_loc_label:'坐标',pro_loc_val:'南京 / 北京',
-    sec_edu:'教育经历',edu1_title:'工学学士',edu1_school:'南京大学',edu2_title:'工学硕士',edu2_school:'北京大学',
-    sec_research:'研究方向'},
-  en:{page_title:'SAM | About',nav_home:'Home',nav_about:'About',nav_anime:'Anime',
-    hero_name:'SAM',hero_affil:'Student | Nanjing University → Peking University',
+  zh:{page_title:'SAM | 鍏充簬',nav_home:'棣栭〉',nav_about:'鍏充簬',nav_anime:'鐣墽',nav_games:'娓告垙',
+    hero_name:'SAM',hero_affil:'瀛︾敓 | 鍗椾含澶у 鈫� 鍖椾含澶у',
+    sec_profile:'鍩烘湰淇℃伅',pro_name_label:'濮撳悕',pro_birth_label:'鍑虹敓',pro_loc_label:'鍧愭爣',pro_loc_val:'鍗椾含 / 鍖椾含',
+    sec_edu:'鏁欒偛缁忓巻',edu1_title:'宸ュ瀛﹀＋',edu1_school:'鍗椾含澶у',edu2_title:'宸ュ纭曞＋',edu2_school:'鍖椾含澶у',
+    sec_research:'鐮旂┒鏂瑰悜',top_student:'瀛︾敓',badge_ic:'闆嗘垚鐢佃矾璁捐',badge_cmos:'CMOS 妯℃嫙鐢佃矾',badge_vlsi:'VLSI',badge_mems:'MEMS',badge_fpga:'FPGA',badge_mixed:'娣峰悎淇″彿',badge_signal:'淇″彿澶勭悊',badge_embedded:'宓屽叆寮忕郴缁�',badge_semi:'鍗婂浣撶墿鐞�',badge_asic:'ASIC 璁捐',edu2_period_present:'鑷充粖'},
+  en:{page_title:'SAM | About',nav_home:'Home',nav_about:'About',nav_anime:'Anime',nav_games:'Games',
+    hero_name:'SAM',hero_affil:'Student | Nanjing University 鈫� Peking University',
     sec_profile:'Profile',pro_name_label:'Name',pro_birth_label:'Date of Birth',pro_loc_label:'Location',pro_loc_val:'Nanjing / Beijing',
     sec_edu:'Education',edu1_title:'B.Eng.',edu1_school:'Nanjing University',edu2_title:'M.Eng.',edu2_school:'Peking University',
-    sec_research:'Research Interests'}
+    sec_research:'Research Interests',top_student:'Student',badge_ic:'IC Design',badge_cmos:'CMOS Analog',badge_vlsi:'VLSI',badge_mems:'MEMS',badge_fpga:'FPGA',badge_mixed:'Mixed-Signal',badge_signal:'Signal Processing',badge_embedded:'Embedded Systems',badge_semi:'Semiconductor Physics',badge_asic:'ASIC Design',edu2_period_present:'Present'}
 };
-function applyLang(l){localStorage.setItem('sam_lang',l);document.getElementById('langToggle').textContent=l==='zh'?'中':'EN';document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(i18n[l]&&i18n[l][k]) el.innerHTML=i18n[l][k]})}
-const sl=localStorage.getItem('sam_lang')||'zh';document.getElementById('langToggle').textContent=sl==='zh'?'中':'EN';
+function applyLang(l){localStorage.setItem('sam_lang',l);document.getElementById('langToggle').textContent=l==='zh'?'涓�':'EN';document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(i18n[l]&&i18n[l][k]) el.innerHTML=i18n[l][k]})}
+const sl=localStorage.getItem('sam_lang')||'zh';document.getElementById('langToggle').textContent=sl==='zh'?'涓�':'EN';
 document.getElementById('langToggle').addEventListener('click',()=>{const c=localStorage.getItem('sam_lang')||'zh';applyLang(c==='zh'?'en':'zh')});
 setTimeout(()=>applyLang(sl),10);
 </script>
