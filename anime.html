@@ -1,146 +1,627 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title data-i18n="page_title">SAM | 番剧手账</title>
-<style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
-body{font-family:'Courier New','Noto Sans SC','Hiragino Sans','Yu Gothic',sans-serif;background:#0e0b1a;color:#e0d8f0;min-height:100vh;overflow-x:hidden}
-::selection{background:#ff6eb488;color:#fff}
-body::before{content:'';position:fixed;top:0;left:0;width:100vw;height:100vh;background:radial-gradient(circle at 20% 30%,rgba(200,100,255,0.04) 0%,transparent 50%),radial-gradient(circle at 80% 70%,rgba(100,200,255,0.04) 0%,transparent 50%),repeating-linear-gradient(45deg,rgba(255,200,255,0.008) 0px,rgba(255,200,255,0.008) 2px,transparent 2px,transparent 8px);pointer-events:none;z-index:0}
-::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:#0e0b1a}
-::-webkit-scrollbar-thumb{background:#ff6eb433;border-radius:3px}
-.sakura-cont{position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:1;overflow:hidden}
-.petal{position:absolute;top:-20px;width:8px;height:8px;background:rgba(255,180,220,0.15);border-radius:50% 0 50% 0;animation:fall linear infinite}
-@keyframes fall{0%{transform:translateY(-10px) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:0.6}100%{transform:translateY(calc(100vh + 20px)) rotate(720deg);opacity:0}}
-#splash{position:fixed;top:0;left:0;width:100vw;height:100vh;background:#0e0b1a;z-index:10000;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-direction:column;transition:opacity 0.6s}
-#splash.hide{opacity:0;pointer-events:none}
-#splash .sp-text{font-size:1rem;letter-spacing:6px;text-transform:uppercase;color:#ff6eb4;text-shadow:0 0 15px rgba(255,110,180,0.3);animation:pulse 2s infinite}
-#splash .sp-sub{font-size:0.6rem;letter-spacing:4px;color:rgba(255,200,255,0.2);margin-top:14px;text-transform:uppercase}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
-#page-bg{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none}
-#page-bg img{width:100%;height:100%;object-fit:cover;opacity:0.12}
-.container{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:30px 24px 60px}
-.header{display:flex;justify-content:space-between;align-items:center;padding:16px 0 20px;border-bottom:1px solid rgba(255,110,180,0.1);margin-bottom:30px;flex-wrap:wrap;gap:10px}
-.header .logo{font-size:1rem;letter-spacing:2px;color:rgba(255,200,255,0.6);font-weight:400}
-.header .logo .jp{font-size:0.7rem;color:rgba(255,110,180,0.4);display:block}
-.header .back-link{color:rgba(255,200,255,0.4);text-decoration:none;font-size:0.8rem;letter-spacing:2px;transition:color 0.3s}
-.header .back-link:hover{color:#ff6eb4}
-.hero{text-align:center;padding:30px 0 40px}
-.hero h1{font-size:clamp(2rem,6vw,3.5rem);font-weight:700;letter-spacing:6px;background:linear-gradient(135deg,#ff6eb4,#c084fc,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero .sub{font-size:clamp(0.7rem,1.2vw,0.85rem);color:rgba(255,200,255,0.7);letter-spacing:4px;margin-top:10px}
-.hero .desc{font-size:clamp(0.75rem,1.1vw,0.85rem);color:rgba(255,255,255,0.55);letter-spacing:2px;margin-top:14px}
-.st{font-size:0.85rem;letter-spacing:3px;color:rgba(255,110,180,0.7);margin:40px 0 20px;font-weight:400;}.st span{color:#c084fc99}
-.anime-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;margin:20px 0 40px}
-.anime-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,110,180,0.08);border-radius:6px;overflow:hidden;transition:all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);position:relative;cursor:pointer;text-decoration:none;color:inherit;display:block}
-.anime-card:hover{transform:translateY(-6px);border-color:rgba(255,110,180,0.35);box-shadow:0 12px 40px rgba(255,110,180,0.15),0 0 60px rgba(192,132,252,0.08)}
-.anime-card .card-img{width:100%;height:220px;overflow:hidden;position:relative;background:linear-gradient(135deg,#1a1030,#0e0b1a)}
-.anime-card .card-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s;opacity:0.85}
-.anime-card:hover .card-img img{transform:scale(1.05);opacity:1}
-.anime-card .card-img .year-badge{position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);padding:3px 10px;border-radius:2px;font-size:0.65rem;letter-spacing:1px;color:#ff6eb4;border:1px solid rgba(255,110,180,0.15)}
-.anime-card .card-img .rating{position:absolute;bottom:8px;left:10px;font-size:0.7rem;color:rgba(255,255,255,0.3);letter-spacing:1px}
-.anime-card .card-img .wiki-badge{position:absolute;bottom:8px;right:10px;font-size:0.6rem;color:rgba(255,200,255,0.3);background:rgba(0,0,0,0.4);padding:2px 8px;border-radius:2px;letter-spacing:1px;backdrop-filter:blur(2px)}.anime-card:hover .card-img .wiki-badge{color:#ff6eb4}
-.anime-card .card-body{padding:16px 18px 18px}
-.anime-card .card-body .jp-title{font-size:0.65rem;letter-spacing:1px;color:rgba(255,200,255,0.2);margin-bottom:2px}
-.anime-card .card-body .cn-title{font-size:1rem;font-weight:600;color:#d0c8e0;margin-bottom:4px}
-.anime-card .card-body .en-title{font-size:0.75rem;color:rgba(255,255,255,0.45);margin-bottom:8px}
-.anime-card .card-body .desc{font-size:0.75rem;color:rgba(255,255,255,0.55);line-height:1.6}
-.anime-card .card-body .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
-.anime-card .card-body .tags span{font-size:0.6rem;padding:2px 8px;border:1px solid rgba(255,110,180,0.1);border-radius:2px;color:rgba(255,110,180,0.4);background:rgba(255,110,180,0.03)}
-.anime-card .card-body .quote{margin-top:10px;padding:8px 10px;border-left:2px solid rgba(255,110,180,0.25);font-size:0.7rem;color:rgba(255,200,255,0.45);font-style:italic;line-height:1.5}
-.watch-order{background:rgba(255,110,180,0.02);border:1px solid rgba(255,110,180,0.06);border-radius:6px;padding:20px 24px;margin:20px 0}
-.watch-order ol{padding-left:20px}
-.watch-order ol li{padding:6px 0;font-size:0.8rem;color:rgba(255,255,255,0.65);border-bottom:1px solid rgba(255,110,180,0.06);list-style-position:inside}
-.watch-order ol li:last-child{border-bottom:none}
-.watch-order ol li::marker{color:#ff6eb466}
-.music-player{margin:40px 0;background:rgba(255,255,255,0.02);border:1px solid rgba(255,110,180,0.08);border-radius:3px;padding:20px 24px}
-.music-player .mp-title{font-size:0.7rem;letter-spacing:2px;color:rgba(255,110,180,0.6);text-transform:uppercase;margin-bottom:8px}
-.mp-controls{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.mp-btn{background:rgba(255,110,180,0.06);border:1px solid rgba(255,110,180,0.15);color:#ff6eb4;padding:8px 18px;border-radius:2px;font-family:inherit;font-size:0.8rem;letter-spacing:1px;cursor:pointer;transition:all 0.3s;user-select:none}
-.mp-btn:hover{background:rgba(255,110,180,0.12)}
-.mp-btn.active{background:rgba(192,132,252,0.15);border-color:#c084fc44;color:#c084fc}
-.mp-status{font-size:0.7rem;color:rgba(255,255,255,0.55);letter-spacing:1px;min-width:70px}
-.mp-time{font-size:0.65rem;color:rgba(255,110,180,0.3);font-family:inherit;letter-spacing:1px;min-width:90px;text-align:center}
-input[type=range].seek-bar{width:100%;margin:8px 0;height:4px;-webkit-appearance:none;appearance:none;background:rgba(255,110,180,0.1);outline:none;border-radius:2px;cursor:pointer}
-input[type=range].seek-bar::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;border-radius:50%;background:#ff6eb4;cursor:pointer;border:1px solid rgba(255,110,180,0.3)}
-.lang-btn{background:rgba(255,110,180,0.06);border:1px solid rgba(255,110,180,0.15);color:#ff6eb488;padding:4px 12px;border-radius:2px;font-family:inherit;font-size:0.7rem;letter-spacing:1px;cursor:pointer;transition:all 0.3s}
-.lang-btn:hover{background:rgba(255,110,180,0.12);color:#ff6eb4}
-footer{margin-top:50px;padding:20px 0;text-align:center;border-top:1px solid rgba(255,110,180,0.1);font-size:0.65rem;color:rgba(255,200,255,0.4);letter-spacing:1px}
-footer a{color:rgba(255,110,180,0.3);text-decoration:none;margin:0 8px;transition:color 0.3s}
-footer a:hover{color:#ff6eb4}
-@media(max-width:600px){.container{padding:20px 16px}.anime-grid{grid-template-columns:1fr}.header{flex-direction:column;align-items:flex-start}}
-</style>
-</head>
-<body>
-<div id="page-bg"><img src="anime.jpg" alt="" aria-hidden="true"></div>
-<div id="splash"><div class="sp-text">✦ ENTER</div><div class="sp-sub">ANIME JOURNAL · 2026</div></div>
-<div class="sakura-cont" id="sakura"></div>
-<div class="container">
-  <div class="header">
-    <div class="logo">SAM の 番组<span class="jp">— アニメ手帳 —</span></div>
-    <div style="display:flex;gap:16px;align-items:center">
-      <a href="index.html" class="back-link">◂ <span data-i18n="back_home">返回</span></a>
-      <button class="lang-btn" id="langToggle">EN</button>
-    </div>
-  </div>
-  <div class="hero">
-    <h1>✦ <span data-i18n="hero_title">番剧手账</span> ✦</h1>
-    <div class="sub" data-i18n="hero_sub">— ANIME JOURNAL —</div>
-    <div class="desc" data-i18n="hero_desc">那些在深夜触动过我的故事</div>
-  </div>
-  <h2 class="st"><span>◆</span> <span data-i18n="sec_collection">作品收藏</span></h2>
-  <div class="anime-grid" id="anime-grid"></div>
-  <h2 class="st"><span>◆</span> <span data-i18n="sec_timeline">观看时序</span></h2>
-  <div class="watch-order">
-    <ol>
-      <li><strong style="color:#c0b8d0">2009</strong> — Steins;Gate <span data-i18n="wo_sg">（原作游戏 → 2011 动画化）</span></li>
-      <li><strong style="color:#c0b8d0">2012</strong> — Sword Art Online <span data-i18n="wo_sao">— 川原砾</span></li>
-      <li><strong style="color:#c0b8d0">2015</strong> — One Punch Man <span data-i18n="wo_opm">— ONE · 村田雄介</span></li>
-      <li><strong style="color:#c0b8d0">2016</strong> — Re:Zero <span data-i18n="wo_rz">— 长月达平</span></li>
-    </ol>
-  </div>
-  <div class="music-player">
-    <div class="mp-title" data-i18n="mp_title">♫ BGM / MYTH & ROID — STYX HELIX</div>
-    <div class="mp-controls">
-      <button class="mp-btn" id="mp-play">▶</button>
-      <span class="mp-time" id="mp-time">00:00 / 00:00</span>
-      <button class="mp-btn" id="mp-loop">🔁</button>
-      <span class="mp-status" id="mp-status" data-i18n="mp_ready">■ 就绪</span>
-    </div>
-    <input type="range" class="seek-bar" id="mp-seek" value="0" max="100">
-  </div>
-  <footer>
-    <p><span data-i18n="footer_text">SAM · 番剧手账</span> · 2026</p>
-    <p style="margin-top:4px"><a href="index.html" data-i18n="footer_home">首页</a><a href="about.html">About</a></p>
-  </footer>
-</div>
-<script>
-// Splash to autoplay
-!(function(){const splash=document.getElementById('splash');const audio=new Audio();audio.preload='auto';audio.volume=0.35;audio.loop=true;const p=window.location.href.lastIndexOf('/');audio.src=window.location.href.substring(0,p+1)+'MYTH & ROID - STYX HELIX.mp3';splash.addEventListener('click',async()=>{splash.classList.add('hide');try{await audio.play()}catch(e){}initPlayer()});function initPlayer(){const btn=document.getElementById('mp-play'),loopBtn=document.getElementById('mp-loop');const st=document.getElementById('mp-status'),tm=document.getElementById('mp-time'),seek=document.getElementById('mp-seek');let isPlaying=true,isLoop=true,seeking=false;btn.textContent='⏸';btn.classList.add('active');st.textContent='♫';loopBtn.classList.add('active');loopBtn.textContent='🔁 循环中';audio.loop=true;function fmt(t){const m=Math.floor(t/60),s=Math.floor(t%60);return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}function ut(){if(!audio.duration||!isPlaying||seeking)return;seek.value=(audio.currentTime/audio.duration)*100;tm.textContent=fmt(audio.currentTime)+' / '+fmt(audio.duration);requestAnimationFrame(ut)}requestAnimationFrame(ut);btn.addEventListener('click',()=>{if(isPlaying){audio.pause();isPlaying=false;btn.textContent='▶';btn.classList.remove('active');st.textContent='■'}else{audio.play();isPlaying=true;btn.textContent='⏸';btn.classList.add('active');st.textContent='♫';requestAnimationFrame(ut)}});seek.addEventListener('input',()=>{seeking=true;if(audio.duration)tm.textContent=fmt(audio.duration*seek.value/100)+' / '+fmt(audio.duration)});seek.addEventListener('change',()=>{seeking=false;if(audio.duration)audio.currentTime=audio.duration*seek.value/100});loopBtn.addEventListener('click',()=>{isLoop=!isLoop;audio.loop=isLoop;loopBtn.textContent=isLoop?'🔁 循环中':'🔁 循环';loopBtn.classList.toggle('active')})}})();
-// Sakura
-!(function(){const c=document.getElementById('sakura');const n=30;for(let i=0;i<n;i++){const p=document.createElement('div');p.className='petal';p.style.left=Math.random()*100+'%';p.style.animationDuration=(8+Math.random()*12)+'s';p.style.animationDelay=Math.random()*15+'s';p.style.width=(6+Math.random()*6)+'px';p.style.height=p.style.width;p.style.opacity=0.1+Math.random()*0.2;c.appendChild(p)}})();
-// I18n
-const i18n={zh:{page_title:'SAM | 番剧手账',back_home:'返回',hero_title:'番剧手账',hero_sub:'— ANIME JOURNAL —',hero_desc:'那些在深夜触动过我的故事',sec_collection:'作品收藏',sec_timeline:'观看时序',wo_sg:'（原作游戏 → 2011 动画化）',wo_sao:'— 川原砾',wo_opm:'— ONE · 村田雄介',wo_rz:'— 长月达平',
-mp_title:'♫ BGM / MYTH & ROID — STYX HELIX',mp_ready:'■ 就绪',footer_text:'SAM · 番剧手账',footer_home:'首页',
-sg_title:'命运石之门',sg_en:'Steins;Gate',sg_tags:'科幻 · 时间旅行 · 悬疑 · 神作',sg_quote:'El Psy Kongroo.',sg_desc:'「这一切都是 Steins;Gate 的选择！」一部关于时间旅行、中二病与命运抗争的杰作。',
-sao_title:'刀剑神域',sao_en:'Sword Art Online',sao_tags:'VRMMO · 冒险 · 奇幻 · 动作',sao_quote:'这个世界不是游戏。',sao_desc:'在死亡游戏 MMORPG 中求生。虚拟世界的冒险与羁绊，奠定了现代 VR 题材的基石。',
-opm_title:'一拳超人',opm_en:'One Punch Man',opm_tags:'热血 · 搞笑 · 战斗 · 超级英雄',opm_quote:'我只是一名兴趣使然的英雄。',opm_desc:'最强英雄的烦恼——一拳就能解决一切。当力量达到极致，内心的空虚与对热血的渴望成了最大的对手。',
-rz_title:'Re:从零开始的异世界生活',rz_en:'Re:Zero',rz_tags:'异世界 · 轮回 · 黑暗奇幻 · 感动',rz_quote:'你是世界上最了不起的英雄。',rz_desc:'死亡回归 —— 一次次在绝望中重来。不是龙傲天，而是即使满身伤痕也要守护重要之人的故事。'},
-en:{page_title:'SAM | Anime Journal',back_home:'Back',hero_title:'Anime Journal',hero_sub:'— ANIME JOURNAL —',hero_desc:'Stories that touched me in the late night',sec_collection:'Collection',sec_timeline:'Timeline',wo_sg:'(Visual Novel to Anime 2011)',wo_sao:'— Reki Kawahara',wo_opm:'— ONE & Yusuke Murata',wo_rz:'— Tappei Nagatsuki',
-mp_title:'♫ BGM / MYTH & ROID — STYX HELIX',mp_ready:'■ Ready',footer_text:'SAM · Anime Journal',footer_home:'Home',
-sg_title:'Steins;Gate',sg_en:'Steins;Gate',sg_tags:'Sci-Fi, Time Travel, Mystery, Masterpiece',sg_quote:'El Psy Kongroo.',sg_desc:'"It\'s all based on the choice of Steins;Gate!" A masterpiece about time travel, chuunibyou, and fighting destiny.',
-sao_title:'Sword Art Online',sao_en:'Sword Art Online',sao_tags:'VRMMO, Adventure, Fantasy, Action',sao_quote:'This is not a game.',sao_desc:'Survive in a death game MMORPG. Adventure and bonds in a virtual world - the cornerstone of modern VR anime.',
-opm_title:'One Punch Man',opm_en:'One Punch Man',opm_tags:'Action, Comedy, Battle, Superhero',opm_quote:'I\'m just a hero for fun.',opm_desc:'The strongest hero\'s dilemma - one punch solves everything. When power peaks, inner emptiness becomes the real enemy.',
-rz_title:'Re:Zero',rz_en:'Re:Zero',rz_tags:'Isekai, Time Loop, Dark Fantasy, Emotional',rz_quote:'You\'re the greatest hero in the world.',rz_desc:'Return by Death - starting over and over in despair. Not an OP hero, but protecting those you love even when broken.'}};
-const animeData=[{id:'sg',jp:'シュタインズ・ゲート',year:2009,rating:'9.5 / 10',img:'steinsgate.avif',wiki:'https://steins-gate.fandom.com/wiki/Steins;Gate_Wiki',p:'sg'},{id:'sao',jp:'ソードアート・オンライン',year:2012,rating:'8.5 / 10',img:'sao.jpg',wiki:'https://swordartonline.fandom.com/wiki/Sword_Art_Online_Wiki',p:'sao'},{id:'opm',jp:'ワンパンマン',year:2015,rating:'9.0 / 10',img:'onepunch.webp',wiki:'https://onepunchman.fandom.com/wiki/One-Punch_Man_Wiki',p:'opm'},{id:'rz',jp:'Re:ゼロから始める異世界生活',year:2016,rating:'9.2 / 10',img:'re0.webp',wiki:'https://rezero.fandom.com/wiki/Re:Zero_Wiki',p:'rz'}];
-animeData.sort((a,b)=>a.year-b.year);
-function renderCards(){const grid=document.getElementById('anime-grid');grid.innerHTML='';const l=localStorage.getItem('sam_lang')||'zh';animeData.forEach(a=>{const o=i18n[l];const t=o[a.p+'_title'],e=o[a.p+'_en'],d=o[a.p+'_desc'],tg=o[a.p+'_tags'],q=o[a.p+'_quote'];const card=document.createElement('a');card.className='anime-card';card.href=a.wiki;card.target='_blank';card.rel='noopener';card.innerHTML='<div class="card-img"><img src="'+a.img+'" alt="'+t+'" loading="lazy"><div class="year-badge">'+a.year+'</div><div class="rating">'+a.rating+'</div><div class="wiki-badge">📖 Fandom</div></div><div class="card-body"><div class="jp-title">'+a.jp+'</div><div class="cn-title">'+t+'</div><div class="en-title">'+e+'</div><div class="desc">'+d+'</div><div class="tags">'+tg.split('·').map(x=>'<span>#'+x.trim()+'</span>').join('')+'</div><div class="quote">「'+q+'」</div></div>';grid.appendChild(card)})}
-function applyLang(l){localStorage.setItem('sam_lang',l);document.getElementById('langToggle').textContent=l==='zh'?'EN':'中';document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(i18n[l]&&i18n[l][k]) el.innerHTML=i18n[l][k]});renderCards()}
-const sl=localStorage.getItem('sam_lang')||'zh';document.getElementById('langToggle').textContent=sl==='zh'?'EN':'中';
-document.getElementById('langToggle').addEventListener('click',()=>{const c=localStorage.getItem('sam_lang')||'zh';applyLang(c==='zh'?'en':'zh')});renderCards();setTimeout(()=>applyLang(sl),10);
-</script>
-</body>
-</html>
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="page_title">SAM | 番剧手账</title>
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: 'Courier New', 'Noto Sans SC', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+      background: #0e0b1a;
+      color: #e0d8f0;
+      min-height: 100vh;
+      overflow-x: hidden
+    }
+
+    ::selection {
+      background: #ff6eb488;
+      color: #fff
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 20% 30%, rgba(200, 100, 255, 0.04) 0%, transparent 50%), radial-gradient(circle at 80% 70%, rgba(100, 200, 255, 0.04) 0%, transparent 50%), repeating-linear-gradient(45deg, rgba(255, 200, 255, 0.008) 0px, rgba(255, 200, 255, 0.008) 2px, transparent 2px, transparent 8px);
+      pointer-events: none;
+      z-index: 0
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0e0b1a
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #ff6eb433;
+      border-radius: 3px
+    }
+
+    .sakura-cont {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden
+    }
+
+    .petal {
+      position: absolute;
+      top: -20px;
+      width: 8px;
+      height: 8px;
+      background: rgba(255, 180, 220, 0.15);
+      border-radius: 50% 0 50% 0;
+      animation: fall linear infinite
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10px) rotate(0deg);
+        opacity: 0
+      }
+
+      10% {
+        opacity: 1
+      }
+
+      90% {
+        opacity: 0.6
+      }
+
+      100% {
+        transform: translateY(calc(100vh + 20px)) rotate(720deg);
+        opacity: 0
+      }
+    }
+
+    #splash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #0e0b1a;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-direction: column;
+      transition: opacity 0.6s
+    }
+
+    #splash.hide {
+      opacity: 0;
+      pointer-events: none
+    }
+
+    #splash .sp-text {
+      font-size: 1rem;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: #ff6eb4;
+      text-shadow: 0 0 15px rgba(255, 110, 180, 0.3);
+      animation: pulse 2s infinite
+    }
+
+    #splash .sp-sub {
+      font-size: 0.6rem;
+      letter-spacing: 4px;
+      color: rgba(255, 200, 255, 0.2);
+      margin-top: 14px;
+      text-transform: uppercase
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0.4
+      }
+    }
+
+    #page-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none
+    }
+
+    #page-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.12
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 30px 24px 60px
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0 20px;
+      border-bottom: 1px solid rgba(255, 110, 180, 0.1);
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 10px
+    }
+
+    .header .logo {
+      font-size: 1rem;
+      letter-spacing: 2px;
+      color: rgba(255, 200, 255, 0.6);
+      font-weight: 400
+    }
+
+    .header .logo .jp {
+      font-size: 0.7rem;
+      color: rgba(255, 110, 180, 0.4);
+      display: block
+    }
+
+    .header .back-link {
+      color: rgba(255, 200, 255, 0.4);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      transition: color 0.3s
+    }
+
+    .header .back-link:hover {
+      color: #ff6eb4
+    }
+
+    .hero {
+      text-align: center;
+      padding: 30px 0 40px
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: 6px;
+      background: linear-gradient(135deg, #ff6eb4, #c084fc, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text
+    }
+
+    .hero .sub {
+      font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+      color: rgba(255, 200, 255, 0.7);
+      letter-spacing: 4px;
+      margin-top: 10px
+    }
+
+    .hero .desc {
+      font-size: clamp(0.75rem, 1.1vw, 0.85rem);
+      color: rgba(255, 255, 255, 0.55);
+      letter-spacing: 2px;
+      margin-top: 14px
+    }
+
+    .st {
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      color: rgba(255, 110, 180, 0.7);
+      margin: 40px 0 20px;
+      font-weight: 400;
+    }
+
+    .st span {
+      color: #c084fc99
+    }
+
+    .anime-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      margin: 20px 0 40px
+    }
+
+    .anime-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 110, 180, 0.08);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block
+    }
+
+    .anime-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 110, 180, 0.35);
+      box-shadow: 0 12px 40px rgba(255, 110, 180, 0.15), 0 0 60px rgba(192, 132, 252, 0.08)
+    }
+
+    .anime-card .card-img {
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(135deg, #1a1030, #0e0b1a)
+    }
+
+    .anime-card .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+      opacity: 0.85
+    }
+
+    .anime-card:hover .card-img img {
+      transform: scale(1.05);
+      opacity: 1
+    }
+
+    .anime-card .card-img .year-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      padding: 3px 10px;
+      border-radius: 2px;
+      font-size: 0.65rem;
+      letter-spacing: 1px;
+      color: #ff6eb4;
+      border: 1px solid rgba(255, 110, 180, 0.15)
+    }
+
+    .anime-card .card-img .rating {
+      position: absolute;
+      bottom: 8px;
+      left: 10px;
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.3);
+      letter-spacing: 1px
+    }
+
+    .anime-card .card-img .wiki-badge {
+      position: absolute;
+      bottom: 8px;
+      right: 10px;
+      font-size: 0.6rem;
+      color: rgba(255, 200, 255, 0.3);
+      background: rgba(0, 0, 0, 0.4);
+      padding: 2px 8px;
+      border-radius: 2px;
+      letter-spacing: 1px;
+      backdrop-filter: blur(2px)
+    }
+
+    .anime-card:hover .card-img .wiki-badge {
+      color: #ff6eb4
+    }
+
+    .anime-card .card-body {
+      padding: 16px 18px 18px
+    }
+
+    .anime-card .card-body .jp-title {
+      font-size: 0.65rem;
+      letter-spacing: 1px;
+      color: rgba(255, 200, 255, 0.2);
+      margin-bottom: 2px
+    }
+
+    .anime-card .card-body .cn-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #d0c8e0;
+      margin-bottom: 4px
+    }
+
+    .anime-card .card-body .en-title {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.45);
+      margin-bottom: 8px
+    }
+
+    .anime-card .card-body .desc {
+      font-size: 0.75rem;
+      color: rgba(255, 200, 255, 0.55);
+      line-height: 1.6
+    }
+
+    .anime-card .card-body .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 8px
+    }
+
+    .anime-card .card-body .tags span {
+      font-size: 0.6rem;
+      padding: 2px 8px;
+      border: 1px solid rgba(255, 110, 180, 0.1);
+      border-radius: 2px;
+      color: rgba(255, 110, 180, 0.4);
+      background: rgba(255, 110, 180, 0.03)
+    }
+
+    .anime-card .card-body .quote {
+      font-size: 0.7rem;
+      color: rgba(255, 200, 255, 0.35);
+      font-style: italic;
+      margin-top: 8px;
+      letter-spacing: 0.3px;
+      border-left: 2px solid rgba(255, 110, 180, 0.1);
+      padding-left: 10px
+    }
+
+    .music-player {
+      margin: 50px 0 30px;
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px solid rgba(255, 110, 180, 0.06);
+      border-radius: 3px;
+      padding: 20px 24px
+    }
+
+    .music-player .mp-title {
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      color: rgba(255, 200, 255, 0.3);
+      text-transform: uppercase;
+      margin-bottom: 12px
+    }
+
+    .mp-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap
+    }
+
+    .mp-btn {
+      background: rgba(255, 110, 180, 0.06);
+      border: 1px solid rgba(255, 110, 180, 0.12);
+      color: #ff6eb4cc;
+      padding: 8px 20px;
+      border-radius: 2px;
+      font-family: inherit;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s;
+      user-select: none
+    }
+
+    .mp-btn:hover {
+      background: rgba(255, 110, 180, 0.1)
+    }
+
+    .mp-btn.active {
+      background: rgba(192, 132, 252, 0.1);
+      border-color: #c084fc44;
+      color: #c084fc
+    }
+
+    .lang-btn {
+      background: rgba(255, 110, 180, 0.06);
+      border: 1px solid rgba(255, 110, 180, 0.15);
+      color: #ff6eb488;
+      padding: 4px 12px;
+      border-radius: 2px;
+      font-family: inherit;
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s
+    }
+
+    .lang-btn:hover {
+      background: rgba(255, 110, 180, 0.12);
+      color: #ff6eb4
+    }
+
+    .mp-status {
+      font-size: 0.65rem;
+      color: rgba(255, 200, 255, 0.3);
+      letter-spacing: 2px;
+      min-width: 70px
+    }
+
+    .mp-time {
+      font-size: 0.6rem;
+      color: rgba(255, 200, 255, 0.25);
+      font-family: inherit;
+      letter-spacing: 1px;
+      min-width: 90px;
+      text-align: center
+    }
+
+    input[type=range].seek-bar {
+      width: 100%;
+      margin: 8px 0;
+      height: 3px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: rgba(255, 110, 180, 0.08);
+      outline: none;
+      border-radius: 2px;
+      cursor: pointer
+    }
+
+    input[type=range].seek-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ff6eb4;
+      cursor: pointer;
+      border: 1px solid rgba(255, 110, 180, 0.3)
+    }
+
+    .watch-order {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.35);
+      letter-spacing: 1px;
+      line-height: 2.2;
+      margin: 10px 0 20px
+    }
+
+    .watch-order ol {
+      padding-left: 20px
+    }
+
+    .watch-order li {
+      margin-bottom: 4px
+    }
+
+    footer {
+      margin-top: 50px;
+      padding: 20px 0;
+      text-align: center;
+      border-top: 1px solid rgba(255, 110, 180, 0.1);
+      font-size: 0.65rem;
+      color: rgba(255, 200, 255, 0.4);
+      letter-spacing: 1px
+    }
+
+    footer a {
+      color: rgba(255, 110, 180, 0.3);
+      text-decoration: none;
+      margin: 0 8px;
+      transition: color 0.3s
+    }
+
+    footer a:hover {
+      color: #ff6eb4
+    }
+
+    @media(max-width:640px) {
+      .anime-grid {
+        grid-template-columns: 1fr
+      }
+
+      .header {
+        flex-direction: column;
+        gap: 6px
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="splash">
+    <div class="sp-text">&#9733; ANIME</div>
+    <div class="sp-sub">— Click to Enter —</div>
+  </div>
+  <div id="sakura" class="sakura-cont"></div>
+  <div id="page-bg"><img src="anime.jpg" alt=""></div>
+  <div class="container">
+    <div class="header">
+      <div>
+        <div class="logo"><span data-i18n="logo_text">ANIME</span>
+          <div class="jp">— アニメ手帳 —</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:16px;align-items:center">
+        <a href="index.html" class="back-link">&#9668; <span data-i18n="back_home">返回</span></a>
+        <button class="lang-btn" id="langToggle">EN</button>
+      </div>
+    </div>
+
+    <div class="hero">
+      <h1 data-i18n="hero_title">番剧手账</h1>
+      <div class="sub" data-i18n="hero_sub">— ANIME JOURNAL —</div>
+      <div class="desc" data-i18n="hero_desc">那些在深夜触动过我的故事</div>
+    </div>
+
+    <h2 class="st"><span>&#9670;</span> <span data-i18n="sec_collection">作品收藏</span></h2>
+    <div class="anime-grid" id="anime-grid"></div>
+
+    <h2 class="st"><span>&#9670;</span> <span data-i18n="sec_timeline">观看时序</span></h2>
+    <div class="watch-order">
+      <ol>
+        <li><strong style="color:#c0b8d0">2009</strong> — <span data-i18n="wo_sg_name">命运石之门</span> <span
+            data-i18n="wo_sg">— 志仓千代丸</span></li>
+        <li><strong style="color:#c0b8d0">2012</strong> — <span data-i18n="wo_sao_name">刀剑神域</span> <span
+            data-i18n="wo_sao">— 川原砾</span></li>
+        <li><strong style="color:#c0b8d0">2015</strong> — <span data-i18n="wo_opm_name">一拳超人</span> <span
+            data-i18n="wo_opm">— ONE · 村田雄介</span></li>
+        <li><strong style="color:#c0b8d0">2016</strong> — <span data-i18n="wo_rz_name">Re:从零开始的异世界生活</span> <span
+            data-i18n="wo_rz">— 长月达平</span></li>
+      </ol>
+    </div>
+
+    <div class="music-player">
+      <div class="mp-title" id="mp-title">&#9835; LiSA — crossing field</div>
+      <div class="mp-controls">
+        <button class="mp-btn" id="mp-song0">&#9654; LiSA — crossing field</button>
+        <button class="mp-btn" id="mp-song1">MYTH &amp; ROID — STYX HELIX</button>
+      </div>
+      <div class="mp-controls" style="margin-top:10px">
+        <button class="mp-btn" id="mp-play">&#9654;</button>
+        <span class="mp-time" id="mp-time">00:00 / 00:00</span>
+        <button class="mp-btn" id="mp-loop">&#128260;</button>
+        <span class="mp-status" id="mp-status" data-i18n="mp_ready">&#9632; 就绪</span>
+      </div>
+      <input type="range" class="seek-bar" id="mp-seek" value="0" max="100">
+    </div>
+    <footer>
+      <p><span data-i18n="footer_text">SAM &middot; 番剧手账</span> &middot; 2026</p>
+      <p style="margin-top:4px"><a href="index.html">Home</a><a href="about.html">About</a><a
+          href="games.html">Games</a></p>
+    </footer>
+  </div>
+  <script>
+    // Splash to autoplay
+    (function () { var splash = document.getElementById("splash"); var audio = new Audio(); audio.preload = "auto"; audio.volume = 0.35; audio.loop = true; var p = window.location.href.lastIndexOf("/"); var base = window.location.href.substring(0, p + 1); var songs = [{ n: "LiSA - crossing field.mp3", t: "LiSA — crossing field" }, { n: "MYTH & ROID - STYX HELIX.mp3", t: "MYTH & ROID — STYX HELIX" }]; var currentSong = 0; function loadSong(idx) { audio.pause(); audio.src = base + songs[idx].n; audio.load(); currentSong = idx; document.getElementById("mp-title").textContent = "\u266B " + songs[idx].t; document.querySelectorAll("[id^=mp-song]").forEach(function (b) { b.classList.remove("active") }); document.getElementById("mp-song" + idx).classList.add("active"); var t = document.getElementById("mp-time"); t.textContent = "00:00 / 00:00"; document.getElementById("mp-seek").value = 0 } document.getElementById("mp-song0").addEventListener("click", function () { loadSong(0); if (isPlaying) { audio.play() } }); document.getElementById("mp-song1").addEventListener("click", function () { loadSong(1); if (isPlaying) { audio.play() } }); splash.addEventListener("click", async function () { splash.classList.add("hide"); loadSong(0); try { await audio.play() } catch (e) { } initPlayer() }); var isPlaying = false, isLoop = true, seeking = false; function initPlayer() { var btn = document.getElementById("mp-play"), loopBtn = document.getElementById("mp-loop"); var st = document.getElementById("mp-status"), tm = document.getElementById("mp-time"), seek = document.getElementById("mp-seek"); isPlaying = true; btn.textContent = "\u23F8"; btn.classList.add("active"); st.textContent = "\u266B"; loopBtn.classList.add("active"); function gLoopText() { var l = localStorage.getItem("sam_lang") || "zh"; return l === "zh" ? "\uD83D\uDD01 循环中" : "\uD83D\uDD01 Looping" } function gLoopOffText() { var l = localStorage.getItem("sam_lang") || "zh"; return l === "zh" ? "\uD83D\uDD01 循环" : "\uD83D\uDD01 Loop" } loopBtn.textContent = gLoopText(); audio.loop = true; function fmt(t) { var m = Math.floor(t / 60), s = Math.floor(t % 60); return String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0") } function ut() { if (audio.duration && isPlaying && !seeking) { seek.value = (audio.currentTime / audio.duration) * 100; tm.textContent = fmt(audio.currentTime) + " / " + fmt(audio.duration) } requestAnimationFrame(ut) } requestAnimationFrame(ut); btn.addEventListener("click", function () { if (isPlaying) { audio.pause(); isPlaying = false; btn.textContent = "\u25B6"; btn.classList.remove("active"); st.textContent = "\u25A0" } else { audio.play(); isPlaying = true; btn.textContent = "\u23F8"; btn.classList.add("active"); st.textContent = "\u266B" } requestAnimationFrame(ut) }); seek.addEventListener("input", function () { seeking = true; if (audio.duration) tm.textContent = fmt(audio.duration * seek.value / 100) + " / " + fmt(audio.duration) }); seek.addEventListener("change", function () { seeking = false; if (audio.duration) audio.currentTime = audio.duration * seek.value / 100 }); loopBtn.addEventListener("click", function () { isLoop = !isLoop; audio.loop = isLoop; loopBtn.textContent = isLoop ? gLoopText() : gLoopOffText(); loopBtn.classList.toggle("active") }) } })();
+    // Sakura
+    (function () { var c = document.getElementById("sakura"); var n = 30; for (var i = 0; i < n; i++) { var p = document.createElement("div"); p.className = "petal"; p.style.left = Math.random() * 100 + "%"; p.style.animationDuration = (8 + Math.random() * 12) + "s"; p.style.animationDelay = Math.random() * 15 + "s"; p.style.width = (6 + Math.random() * 6) + "px"; p.style.height = p.style.width; p.style.opacity = 0.1 + Math.random() * 0.2; c.appendChild(p) } })();
+    // I18n
+    var i18n = { zh: { page_title: "SAM | \u756A\u5267\u624B\u5E10", logo_text: "\u756A\u5267", back_home: "\u8FD4\u56DE", hero_title: "\u756A\u5267\u624B\u5E10", hero_sub: "\u2014 ANIME JOURNAL \u2014", hero_desc: "\u90A3\u4E9B\u5728\u6DF1\u591C\u89E6\u52A8\u8FC7\u6211\u7684\u6545\u4E8B", sec_collection: "\u4F5C\u54C1\u6536\u85CF", sec_timeline: "\u89C2\u770B\u65F6\u5E8F", wo_sg_name: "\u547D\u8FD0\u77F3\u4E4B\u95E8", wo_sao_name: "\u5200\u5251\u795E\u57DF", wo_opm_name: "\u4E00\u62F3\u8D85\u4EBA", wo_rz_name: "Re:\u4ECE\u96F6\u5F00\u59CB\u7684\u5F02\u4E16\u754C\u751F\u6D3B", wo_sg: "\u2014 \u5FD7\u4ED3\u5343\u4EE3\u4E38", wo_sao: "\u2014 \u5DDD\u539F\u7816", wo_opm: "\u2014 ONE \u00B7 \u6751\u7530\u96C4\u4ECB", wo_rz: "\u2014 \u957F\u6708\u8FBE\u5E73", mp_title: "\u266B BGM / MYTH & ROID \u2014 STYX HELIX", mp_ready: "\u25A0 \u5C31\u7EEA", footer_text: "SAM \u00B7 \u756A\u5267\u624B\u5E10", footer_home: "\u9996\u9875", sg_title: "\u547D\u8FD0\u77F3\u4E4B\u95E8", sg_en: "Steins;Gate", sg_tags: "\u79D1\u5E7B \u00B7 \u65F6\u95F4\u65C5\u884C \u00B7 \u60AC\u7591 \u00B7 \u795E\u4F5C", sg_quote: "El Psy Kongroo.", sg_desc: "\u300C\u8FD9\u4E00\u5207\u90FD\u662F Steins;Gate \u7684\u9009\u62E9\uFF01\u300D\u4E00\u90E8\u5173\u4E8E\u65F6\u95F4\u65C5\u884C\u3001\u4E2D\u4E8C\u75C5\u4E0E\u547D\u8FD0\u6297\u4E89\u7684\u6770\u4F5C\u3002", sao_title: "\u5200\u5251\u795E\u57DF", sao_en: "Sword Art Online", sao_tags: "VRMMO \u00B7 \u5192\u9669 \u00B7 \u5947\u5E7B \u00B7 \u52A8\u4F5C", sao_quote: "\u8FD9\u4E2A\u4E16\u754C\u4E0D\u662F\u6E38\u620F\u3002", sao_desc: "\u5728\u6B7B\u4EA1\u6E38\u620F MMORPG \u4E2D\u6C42\u751F\u3002\u865A\u62DF\u4E16\u754C\u7684\u5192\u9669\u4E0E\u7F8A\u7ECA\uFF0C\u5960\u5B9A\u4E86\u73B0\u4EE3 VR \u9898\u6750\u7684\u57FA\u77F3\u3002", opm_title: "\u4E00\u62F3\u8D85\u4EBA", opm_en: "One Punch Man", opm_tags: "\u70ED\u8840 \u00B7 \u641E\u7B11 \u00B7 \u6218\u6597 \u00B7 \u8D85\u7EA7\u82F1\u96C4", opm_quote: "\u6211\u53EA\u662F\u4E00\u540D\u5174\u8DA3\u4F7F\u7136\u7684\u82F1\u96C4\u3002", opm_desc: "\u6700\u5F3A\u82F1\u96C4\u7684\u70E6\u607C\u2014\u2014\u4E00\u62F3\u5C31\u80FD\u89E3\u51B3\u4E00\u5207\u3002\u5F53\u529B\u91CF\u8FBE\u5230\u6781\u81F4\uFF0C\u5185\u5FC3\u7684\u7A7A\u865A\u4E0E\u5BF9\u70ED\u8840\u7684\u6E34\u671B\u6210\u4E86\u6700\u5927\u7684\u5BF9\u624B\u3002", rz_title: "Re:\u4ECE\u96F6\u5F00\u59CB\u7684\u5F02\u4E16\u754C\u751F\u6D3B", rz_en: "Re:Zero", rz_tags: "\u5F02\u4E16\u754C \u00B7 \u8F6E\u56DE \u00B7 \u9ED1\u6697\u5947\u5E7B \u00B7 \u611F\u52A8", rz_quote: "\u4F60\u662F\u4E16\u754C\u4E0A\u6700\u4E86\u4E0D\u8D77\u7684\u82F1\u96C4\u3002", rz_desc: "\u6B7B\u4EA1\u56DE\u5F52 \u2014\u2014 \u4E00\u6B21\u6B21\u5728\u7EDD\u671B\u4E2D\u91CD\u6765\u3002\u4E0D\u662F\u9F99\u50B2\u5929\uFF0C\u800C\u662F\u5373\u4F7F\u6EE1\u8EAB\u4F24\u75D5\u4E5F\u8981\u5B88\u62A4\u91CD\u8981\u4E4B\u4EBA\u7684\u6545\u4E8B\u3002" }, en: { page_title: "SAM | Anime Journal", logo_text: "ANIME", back_home: "Back", hero_title: "Anime Journal", hero_sub: "\u2014 ANIME JOURNAL \u2014", hero_desc: "Stories that touched me in the late night", sec_collection: "Collection", sec_timeline: "Timeline", wo_sg_name: "Steins;Gate", wo_sao_name: "Sword Art Online", wo_opm_name: "One Punch Man", wo_rz_name: "Re:Zero", wo_sg: "\u2014 Chiyomaru Shikura", wo_sao: "\u2014 Reki Kawahara", wo_opm: "\u2014 ONE & Yusuke Murata", wo_rz: "\u2014 Tappei Nagatsuki", mp_title: "\u266B BGM / MYTH & ROID \u2014 STYX HELIX", mp_ready: "\u25A0 Ready", footer_text: "SAM \u00B7 Anime Journal", footer_home: "Home", sg_title: "Steins;Gate", sg_en: "Steins;Gate", sg_tags: "Sci-Fi, Time Travel, Mystery, Masterpiece", sg_quote: "El Psy Kongroo.", sg_desc: '"It\'s all based on the choice of Steins;Gate!" A masterpiece about time travel, chuunibyou, and fighting destiny.', sao_title: "Sword Art Online", sao_en: "Sword Art Online", sao_tags: "VRMMO, Adventure, Fantasy, Action", sao_quote: "This is not a game.", sao_desc: "Survive in a death game MMORPG. Adventure and bonds in a virtual world - the cornerstone of modern VR anime.", opm_title: "One Punch Man", opm_en: "One Punch Man", opm_tags: "Action, Comedy, Battle, Superhero", opm_quote: "I'm just a hero for fun.", opm_desc: "The strongest hero's dilemma - one punch solves everything. When power peaks, inner emptiness becomes the real enemy.", rz_title: "Re:Zero", rz_en: "Re:Zero", rz_tags: "Isekai, Time Loop, Dark Fantasy, Emotional", rz_quote: "You're the greatest hero in the world.", rz_desc: "Return by Death - starting over and over in despair. Not an OP hero, but protecting those you love even when broken." } };
+    var animeData = [{ id: "sg", jp: "\u30B7\u30E5\u30BF\u30A4\u30F3\u30BA\u30FB\u30B2\u30FC\u30C8", year: 2009, rating: "9.5 / 10", img: "steinsgate.avif", wiki: "https://steins-gate.fandom.com/wiki/Steins;Gate_Wiki", p: "sg" }, { id: "sao", jp: "\u30BD\u30FC\u30C9\u30A2\u30FC\u30C8\u30FB\u30AA\u30F3\u30E9\u30A4\u30F3", year: 2012, rating: "8.5 / 10", img: "sao.jpg", wiki: "https://swordartonline.fandom.com/wiki/Sword_Art_Online_Wiki", p: "sao" }, { id: "opm", jp: "\u30EF\u30F3\u30D1\u30F3\u30DE\u30F3", year: 2015, rating: "9.0 / 10", img: "onepunch.webp", wiki: "https://onepunchman.fandom.com/wiki/One-Punch_Man_Wiki", p: "opm" }, { id: "rz", jp: "Re:\u30BC\u30ED\u304B\u3089\u59CB\u3081\u308B\u7570\u4E16\u754C\u751F\u6D3B", year: 2016, rating: "9.2 / 10", img: "re0.webp", wiki: "https://rezero.fandom.com/wiki/Re:Zero_Wiki", p: "rz" }];
+    animeData.sort(function (a, b) { return a.year - b.year });
+    function renderCards() { var grid = document.getElementById("anime-grid"); grid.innerHTML = ""; var l = localStorage.getItem("sam_lang") || "zh"; animeData.forEach(function (a) { var o = i18n[l]; var t = o[a.p + "_title"], e = o[a.p + "_en"], d = o[a.p + "_desc"], tg = o[a.p + "_tags"], q = o[a.p + "_quote"]; var card = document.createElement("a"); card.className = "anime-card"; card.href = a.wiki; card.target = "_blank"; card.rel = "noopener"; card.innerHTML = '<div class="card-img"><img src="' + a.img + '" alt="' + t + '" loading="lazy"><div class="year-badge">' + a.year + '</div><div class="rating">' + a.rating + '</div><div class="wiki-badge">&#x1F4D6; Fandom</div></div><div class="card-body"><div class="jp-title">' + a.jp + '</div><div class="cn-title">' + t + '</div><div class="en-title">' + e + '</div><div class="desc">' + d + '</div><div class="tags">' + tg.split("\u00B7").map(function (x) { return "<span>#" + x.trim() + "</span>" }).join("") + '</div><div class="quote">\u300C' + q + '\u300D</div></div>'; grid.appendChild(card) }) }
+    function applyLang(l) { localStorage.setItem("sam_lang", l); document.getElementById("langToggle").textContent = l === "zh" ? "EN" : "\u4E2D"; document.querySelectorAll("[data-i18n]").forEach(function (el) { var k = el.dataset.i18n; if (i18n[l] && i18n[l][k]) el.innerHTML = i18n[l][k] }); renderCards(); var lb = document.getElementById("mp-loop"); if (lb) { var l2 = localStorage.getItem("sam_lang") || "zh"; lb.textContent = l2 === "zh" ? lb.classList.contains("active") ? "\uD83D\uDD01 循环中" : "\uD83D\uDD01 循环" : lb.classList.contains("active") ? "\uD83D\uDD01 Looping" : "\uD83D\uDD01 Loop" } }
+    var sl = localStorage.getItem("sam_lang") || "zh"; document.getElementById("langToggle").textContent = sl === "zh" ? "EN" : "\u4E2D";
+    document.getElementById("langToggle").addEventListener("click", function () { var c = localStorage.getItem("sam_lang") || "zh"; applyLang(c === "zh" ? "en" : "zh") }); renderCards(); setTimeout(function () { applyLang(sl) }, 10);
+  </script>
+</body>
+
+</html>
