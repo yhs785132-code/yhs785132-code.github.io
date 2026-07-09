@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAM | 个人博客</title>
+<title>SAM | 涓汉鍗氬</title>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -48,75 +48,88 @@ input[type=range].seek-bar::-webkit-slider-thumb{-webkit-appearance:none;width:1
 #splash{position:fixed;top:0;left:0;width:100vw;height:100vh;background:#0b0b12;z-index:10000;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-direction:column;transition:opacity 0.6s}
 #splash.hide{opacity:0;pointer-events:none}
 #splash .sp-text{font-size:1rem;letter-spacing:6px;text-transform:uppercase;color:#00f0ff;text-shadow:0 0 15px rgba(0,240,255,0.3);animation:pulse 2s infinite}
-#splash .sp-sub{font-size:0.6rem;letter-spacing:4px;color:rgba(255,255,255,0.15);margin-top:14px;text-transform:uppercase}
+#splash .sp-sub{font-size:0.6rem;letter-spacing:4px;color:rgba(255,255,255,0.15);margin-top:14px}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
 .anime-section{margin:40px 0 30px;background:rgba(255,0,255,0.02);border:1px solid rgba(255,0,255,0.08);border-radius:3px;padding:24px;text-align:center}
 .anime-section .as-title{font-size:0.7rem;letter-spacing:2px;color:rgba(255,0,255,0.4);text-transform:uppercase;margin-bottom:12px}
 .anime-section p{font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:16px}
-.anime-btn{display:inline-block;background:rgba(255,0,255,0.08);border:1px solid rgba(255,0,255,0.2);color:#ff00ff88;padding:10px 32px;border-radius:2px;font-family:inherit;font-size:0.85rem;letter-spacing:3px;text-decoration:none;text-transform:uppercase;transition:all 0.3s;cursor:pointer}
-.anime-btn:hover{background:rgba(255,0,255,0.15);border-color:#ff00ff;color:#ff00ff;box-shadow:0 0 20px rgba(255,0,255,0.15)}
+.anime-btn{display:inline-block;background:rgba(255,0,255,0.06);border:1px solid rgba(255,0,255,0.15);color:#ff00ff88;padding:10px 28px;border-radius:2px;text-decoration:none;font-size:0.75rem;letter-spacing:2px;transition:all 0.3s;text-transform:uppercase}
+.anime-btn:hover{background:rgba(255,0,255,0.12);color:#ff00ff;border-color:#ff00ff44}
+.game-section{margin:40px 0 30px;background:rgba(0,240,255,0.02);border:1px solid rgba(0,240,255,0.08);border-radius:3px;padding:24px;text-align:center}
+.game-section .gs-title{font-size:0.7rem;letter-spacing:2px;color:rgba(0,240,255,0.4);text-transform:uppercase;margin-bottom:12px}
+.game-section p{font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:16px}
+.game-btn{display:inline-block;background:rgba(0,240,255,0.06);border:1px solid rgba(0,240,255,0.15);color:#00f0ff88;padding:10px 28px;border-radius:2px;text-decoration:none;font-size:0.75rem;letter-spacing:2px;transition:all 0.3s;text-transform:uppercase}
+.game-btn:hover{background:rgba(0,240,255,0.12);color:#00f0ff;border-color:#00f0ff44}
 footer{margin-top:60px;padding:24px 0 16px;border-top:1px solid rgba(0,240,255,0.06);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:0.7rem;color:rgba(255,255,255,0.2);letter-spacing:1px}
 footer a{color:rgba(0,240,255,0.35);text-decoration:none;margin-left:14px;transition:color 0.3s}
 footer a:hover{color:#ff00ff88}
-@media(max-width:600px){.container{padding:24px 16px}nav{flex-direction:column;gap:12px}}
 </style>
 </head>
 <body>
-<div id="splash"><div class="sp-text">▶ ENTER</div><div class="sp-sub">SAM · 2026</div></div>
+<div id="splash"><div class="sp-text">&#9733; SAM</div><div class="sp-sub">鈥� CLICK TO ENTER 鈥�</div></div>
 <canvas id="particle-canvas"></canvas>
 <div class="container">
   <nav>
-    <div class="logo">SAM<span>_</span>BLOG</div>
+    <div class="logo">SAM<span>_</span></div>
     <div class="nav-right">
-      <a href="#" data-i18n="nav_home">首页</a>
-      <a href="about.html" data-i18n="nav_about">关于</a>
-      <a href="anime.html" data-i18n="nav_anime">番剧</a>
+      <a href="index.html" data-i18n="nav_home">棣栭〉</a>
+      <a href="about.html" data-i18n="nav_about">鍏充簬</a>
+      <a href="anime.html" data-i18n="nav_anime">鐣墽</a>
+      <a href="games.html" data-i18n="nav_games">娓告垙</a>
       <button class="lang-btn" id="langToggle">EN</button>
     </div>
   </nav>
+
   <section class="hero">
     <h1>SAM</h1>
-    <div class="tagline"><span class="c">✦</span> <span data-i18n="hero_tagline">RESEARCHER · EXPLORER · CODER</span> <span class="c">✦</span></div>
+    <div class="tagline" data-i18n="hero_tagline">RESEARCHER &middot; EXPLORER &middot; CODER</div>
   </section>
   <div class="tw-wrap"><span class="t" id="tw"></span><span class="cursor"></span></div>
 
   <div class="music-player">
-    <div class="mp-title" data-i18n="mp_title">♫ HANS ZIMMER — CORNFIELD CHASE</div>
+    <div class="mp-title" data-i18n="mp_title">&#9835; HANS ZIMMER 鈥� CORNFIELD CHASE</div>
     <div class="mp-controls">
-      <button class="mp-btn" id="mp-play">▶</button>
+      <button class="mp-btn" id="mp-play">&#9654;</button>
       <span class="mp-time" id="mp-time">00:00 / 00:00</span>
-      <button class="mp-btn" id="mp-loop">🔁</button>
-      <span class="mp-status" id="mp-status" data-i18n="mp_ready">■ 就绪</span>
+      <button class="mp-btn" id="mp-loop">&#128260;</button>
+      <span class="mp-status" id="mp-status" data-i18n="mp_ready">&#9632; 灏辩华</span>
     </div>
     <input type="range" class="seek-bar" id="mp-seek" value="0" max="100">
   </div>
 
   <div class="anime-section">
-    <div class="as-title" data-i18n="anime_section_title">◆ 番剧推荐</div>
-    <p data-i18n="anime_section_desc">命运石之门 · Re:Zero · 刀剑神域 · 一拳超人 ……</p>
-    <a href="anime.html" class="anime-btn" data-i18n="anime_section_btn">进入番剧世界 ▸</a>
+    <div class="as-title" data-i18n="anime_section_title">&#9670; 鐣墽鎺ㄨ崘</div>
+    <p data-i18n="anime_section_desc">鍛借繍鐭充箣闂� &middot; Re:Zero &middot; 鍒€鍓戠鍩� &middot; 涓€鎷宠秴浜� 鈥︹€�</p>
+    <a href="anime.html" class="anime-btn" data-i18n="anime_section_btn">杩涘叆鐣墽涓栫晫 &#9656;</a>
   </div>
+
+  <div class="game-section">
+    <div class="gs-title" data-i18n="game_section_title">&#9670; 娓告垙褰�</div>
+    <p data-i18n="game_section_desc">榛戞殫涔嬮瓊 &middot; 鑹惧皵鐧绘硶鐜� &middot; 鍙嫾 &middot; 榛戠璇濇偀绌� 鈥︹€�</p>
+    <a href="games.html" class="game-btn" data-i18n="game_section_btn">杩涘叆娓告垙涓栫晫 &#9656;</a>
+  </div>
+
   <footer>
     <span>&copy; 2026 SAM</span>
-    <div><a href="about.html">About</a><a href="anime.html">Anime</a><a href="#">Contact</a></div>
+    <div><a href="about.html">About</a><a href="anime.html">Anime</a><a href="games.html">Games</a></div>
   </footer>
 </div>
 
 <script>
-// Splash → autoplay music
-!(function(){const splash=document.getElementById('splash');const audio=new Audio();audio.preload='auto';audio.volume=0.4;audio.loop=true;const p=window.location.href.lastIndexOf('/');audio.src=window.location.href.substring(0,p+1)+'Hans Zimmer - Cornfield Chase.mp3';splash.addEventListener('click',async()=>{splash.classList.add('hide');try{await audio.play()}catch(e){}initPlayer()});function initPlayer(){const btn=document.getElementById('mp-play'),loopBtn=document.getElementById('mp-loop');const st=document.getElementById('mp-status'),tm=document.getElementById('mp-time'),seek=document.getElementById('mp-seek');let isPlaying=true,isLoop=true,seeking=false;btn.textContent='⏸';btn.classList.add('active');st.textContent='♫';loopBtn.classList.add('active');loopBtn.textContent='🔁 循环中';audio.loop=true;function fmt(t){const m=Math.floor(t/60),s=Math.floor(t%60);return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}function ut(){if(!audio.duration||!isPlaying||seeking)return;seek.value=(audio.currentTime/audio.duration)*100;tm.textContent=fmt(audio.currentTime)+' / '+fmt(audio.duration);requestAnimationFrame(ut)}requestAnimationFrame(ut);btn.addEventListener('click',()=>{if(isPlaying){audio.pause();isPlaying=false;btn.textContent='▶';btn.classList.remove('active');st.textContent='■'}else{audio.play();isPlaying=true;btn.textContent='⏸';btn.classList.add('active');st.textContent='♫';requestAnimationFrame(ut)}});seek.addEventListener('input',()=>{seeking=true;if(audio.duration)tm.textContent=fmt(audio.duration*seek.value/100)+' / '+fmt(audio.duration)});seek.addEventListener('change',()=>{seeking=false;if(audio.duration)audio.currentTime=audio.duration*seek.value/100});loopBtn.addEventListener('click',()=>{isLoop=!isLoop;audio.loop=isLoop;loopBtn.textContent=isLoop?'🔁 循环中':'🔁 循环';loopBtn.classList.toggle('active')})}})();
+// Splash to autoplay music
+(function(){var splash=document.getElementById("splash");var audio=new Audio();audio.preload="auto";audio.volume=0.4;audio.loop=true;var p=window.location.href.lastIndexOf("/");audio.src=window.location.href.substring(0,p+1)+"Hans Zimmer - Cornfield Chase.mp3";splash.addEventListener("click",async function(){splash.classList.add("hide");try{await audio.play()}catch(e){}initPlayer()});function initPlayer(){var btn=document.getElementById("mp-play"),loopBtn=document.getElementById("mp-loop");var st=document.getElementById("mp-status"),tm=document.getElementById("mp-time"),seek=document.getElementById("mp-seek");var isPlaying=true,isLoop=true,seeking=false;btn.textContent="\u23F8";btn.classList.add("active");st.textContent="\u266B";loopBtn.classList.add("active");function gLoopText(){var l=localStorage.getItem("sam_lang")||"zh";return l==="zh"?"\uD83D\uDD01 寰幆涓�":"\uD83D\uDD01 Looping"}function gLoopOffText(){var l=localStorage.getItem("sam_lang")||"zh";return l==="zh"?"\uD83D\uDD01 寰幆":"\uD83D\uDD01 Loop"}loopBtn.textContent=gLoopText();audio.loop=true;function fmt(t){var m=Math.floor(t/60),s=Math.floor(t%60);return String(m).padStart(2,"0")+":"+String(s).padStart(2,"0")}function ut(){if(!audio.duration||!isPlaying||seeking)return;seek.value=(audio.currentTime/audio.duration)*100;tm.textContent=fmt(audio.currentTime)+" / "+fmt(audio.duration);requestAnimationFrame(ut)}requestAnimationFrame(ut);btn.addEventListener("click",function(){if(isPlaying){audio.pause();isPlaying=false;btn.textContent="\u25B6";btn.classList.remove("active");st.textContent="\u25A0"}else{audio.play();isPlaying=true;btn.textContent="\u23F8";btn.classList.add("active");st.textContent="\u266B";requestAnimationFrame(ut)}});seek.addEventListener("input",function(){seeking=true;if(audio.duration)tm.textContent=fmt(audio.duration*seek.value/100)+" / "+fmt(audio.duration)});seek.addEventListener("change",function(){seeking=false;if(audio.duration)audio.currentTime=audio.duration*seek.value/100});loopBtn.addEventListener("click",function(){isLoop=!isLoop;audio.loop=isLoop;loopBtn.textContent=isLoop?gLoopText():gLoopOffText();loopBtn.classList.toggle("active")})}})();
 // Particles
-!(function(){const c=document.getElementById('particle-canvas'),x=c.getContext('2d');let w,h,p=[],n=80,d=140;function r(){w=c.width=window.innerWidth;h=c.height=window.innerHeight}window.addEventListener('resize',r);r();class P{constructor(){this.R()}R(){this.x=Math.random()*w;this.y=Math.random()*h;this.vx=(Math.random()-.5)*.5;this.vy=(Math.random()-.5)*.5;this.r=Math.random()*1.8+.3}U(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>w)this.vx*=-1;if(this.y<0||this.y>h)this.vy*=-1}D(){x.beginPath();x.arc(this.x,this.y,this.r,0,Math.PI*2);x.fillStyle='rgba(0,240,255,0.3)';x.fill()}}for(let i=0;i<n;i++)p.push(new P);const cs=['rgba(0,240,255,','rgba(255,0,255,','rgba(0,220,180,'];function L(){for(let i=0;i<p.length;i++)for(let j=i+1;j<p.length;j++){const dx=p[i].x-p[j].x,dy=p[i].y-p[j].y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<d){const a=(1-dist/d)*.2,ci=(i+j)%cs.length;x.beginPath();x.moveTo(p[i].x,p[i].y);x.lineTo(p[j].x,p[j].y);x.strokeStyle=cs[ci]+a+')';x.lineWidth=.5;x.stroke()}}}let m={x:-999,y:-999};window.addEventListener('mousemove',e=>{m.x=e.clientX;m.y=e.clientY});window.addEventListener('mouseleave',()=>{m.x=-999;m.y=-999});function M(){for(const q of p){const dx=q.x-m.x,dy=q.y-m.y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<d*1.2){const a=(1-dist/(d*1.2))*.3;x.beginPath();x.moveTo(m.x,m.y);x.lineTo(q.x,q.y);x.strokeStyle='rgba(255,0,255,'+a+')';x.lineWidth=.6;x.stroke()}}}function A(){x.clearRect(0,0,w,h);x.shadowBlur=0;for(const q of p){q.U();q.D()}x.shadowBlur=0;L();M();requestAnimationFrame(A)}A()})();
+(function(){var c=document.getElementById("particle-canvas"),x=c.getContext("2d");var w,h,p=[],n=80,d=140;function r(){w=c.width=window.innerWidth;h=c.height=window.innerHeight}window.addEventListener("resize",r);r();function P(){this.R()}P.prototype.R=function(){this.x=Math.random()*w;this.y=Math.random()*h;this.vx=(Math.random()-0.5)*0.5;this.vy=(Math.random()-0.5)*0.5;this.r=Math.random()*1.8+0.3};P.prototype.U=function(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>w)this.vx*=-1;if(this.y<0||this.y>h)this.vy*=-1};P.prototype.D=function(){x.beginPath();x.arc(this.x,this.y,this.r,0,Math.PI*2);x.fillStyle="rgba(0,240,255,0.3)";x.fill()};for(var i=0;i<n;i++)p.push(new P);var cs=["rgba(0,240,255,","rgba(255,0,255,","rgba(0,220,180,"];function L(){for(var i=0;i<p.length;i++)for(var j=i+1;j<p.length;j++){var dx=p[i].x-p[j].x,dy=p[i].y-p[j].y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<d){var a=(1-dist/d)*0.2,ci=(i+j)%cs.length;x.beginPath();x.moveTo(p[i].x,p[i].y);x.lineTo(p[j].x,p[j].y);x.strokeStyle=cs[ci]+a+")";x.lineWidth=0.5;x.stroke()}}}var m={x:-999,y:-999};window.addEventListener("mousemove",function(e){m.x=e.clientX;m.y=e.clientY});window.addEventListener("mouseleave",function(){m.x=-999;m.y=-999});function M(){for(var k=0;k<p.length;k++){var q=p[k],dx=q.x-m.x,dy=q.y-m.y,dist=Math.sqrt(dx*dx+dy*dy);if(dist<d*1.2){var a=(1-dist/(d*1.2))*0.3;x.beginPath();x.moveTo(m.x,m.y);x.lineTo(q.x,q.y);x.strokeStyle="rgba(255,0,255,"+a+")";x.lineWidth=0.6;x.stroke()}}}function A(){x.clearRect(0,0,w,h);x.shadowBlur=0;for(var k=0;k<p.length;k++){p[k].U();p[k].D()}x.shadowBlur=0;L();M();requestAnimationFrame(A)}A()})();
 // Typewriter
-const twPhrases={zh:['> 系统初始化完成 … 欢迎来到 SAM 的数字空间','> 南京大学 → 北京大学 … 探索永无止境','> "我们都是自己内心的囚徒"','> 兴趣：AI · 量子计算 · 赛博朋克 · 二次元','> SYSTEM READY /// 请随意浏览','> 正在初始化神经接口…','> 信号已获取。认知节点：SAM。','> 南京大学 → 北京大学。','> 年龄：22。状态：追求知识中。','> "宇宙在我们心中。" — C. Sagan','> 系统就绪。// 开始运行。'],en:['> Initializing neural interface...','> Signal acquired. Cognitive node: SAM.','> Nanjing University → Peking University.','> Age: 22. Status: In pursuit of knowledge.','> "The cosmos is within us." — C. Sagan','> SYSTEM READY. // engage.','> System initialization complete... Welcome to SAM\'s digital space.','> NJU → PKU ... endless exploration.','> "We are all just prisoners here, of our own device"','> Interests: AI · Quantum Computing · Cyberpunk · Anime','> SYSTEM READY /// feel free to browse']};
-let twIdx=0,twChar=0,twEl=document.getElementById('tw'),twTimer=null;
-function restartTypewriter(){if(twTimer){clearTimeout(twTimer);twTimer=null}twIdx=0;twChar=0;twEl.textContent='';setTimeout(typeTw,200)}
-function typeTw(){const arr=twPhrases[localStorage.getItem('sam_lang')||'zh'];if(!arr||!arr.length){twTimer=setTimeout(typeTw,500);return}if(twChar<arr[twIdx].length){twEl.textContent+=arr[twIdx][twChar];twChar++;twTimer=setTimeout(typeTw,25+Math.random()*35)}else{twTimer=setTimeout(eraseTw,2000)}}
-function eraseTw(){if(twChar>0){twEl.textContent=twEl.textContent.slice(0,-1);twChar--;twTimer=setTimeout(eraseTw,12)}else{const arr=twPhrases[localStorage.getItem('sam_lang')||'zh'];twIdx=(twIdx+1)%arr.length;twTimer=setTimeout(typeTw,500)}}
-const i18n={zh:{nav_home:'首页',nav_about:'关于',nav_anime:'番剧',hero_tagline:'RESEARCHER · EXPLORER · CODER',mp_title:'♫ HANS ZIMMER — CORNFIELD CHASE',mp_ready:'■ 就绪',anime_section_title:'◆ 番剧推荐',anime_section_desc:'命运石之门 · Re:Zero · 刀剑神域 · 一拳超人 ……',anime_section_btn:'进入番剧世界 ▸'},en:{nav_home:'Home',nav_about:'About',nav_anime:'Anime',hero_tagline:'RESEARCHER · EXPLORER · CODER',mp_title:'♫ HANS ZIMMER — CORNFIELD CHASE',mp_ready:'■ Ready',anime_section_title:'◆ Anime Favorites',anime_section_desc:'Steins;Gate · Re:Zero · SAO · One Punch Man ……',anime_section_btn:'Enter Anime World ▸'}};
-function applyLang(l){localStorage.setItem('sam_lang',l);document.getElementById('langToggle').textContent=l==='zh'?'EN':'中';document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(i18n[l]&&i18n[l][k]) el.innerHTML=i18n[l][k]});restartTypewriter()}
-const sl=localStorage.getItem('sam_lang')||'zh';document.getElementById('langToggle').textContent=sl==='zh'?'EN':'中';
-document.getElementById('langToggle').addEventListener('click',()=>{const c=localStorage.getItem('sam_lang')||'zh';applyLang(c==='zh'?'en':'zh')});setTimeout(()=>applyLang(sl),10);
+var twPhrases={zh:["\u003E 绯荤粺鍒濆鍖栧畬鎴� \u2026 娆㈣繋鏉ュ埌 SAM 鐨勬暟瀛楃┖闂�","\u003E 鍗椾含澶у \u2192 鍖椾含澶у \u2026 鎺㈢储姘告棤姝㈠","\u003E \u201C鎴戜滑閮芥槸鑷繁鍐呭績鐨勫洑寰抃u201D","\u003E 鍏磋叮锛欰I \u00B7 閲忓瓙璁＄畻 \u00B7 璧涘崥鏈嬪厠 \u00B7 浜屾鍏�","\u003E SYSTEM READY /// 璇烽殢鎰忔祻瑙�","\u003E 姝ｅ湪鍒濆鍖栫缁忔帴鍙u2026","\u003E 淇″彿宸茶幏鍙栥€傝鐭ヨ妭鐐癸細SAM銆�","\u003E 鍗椾含澶у \u2192 鍖椾含澶у銆�","\u003E 骞撮緞锛�22銆傜姸鎬侊細杩芥眰鐭ヨ瘑涓€�","\u003E \u201C瀹囧畽鍦ㄦ垜浠績涓€俓u201D 鈥� C. Sagan","\u003E 绯荤粺灏辩华銆�// 寮€濮嬭繍琛屻€�"],en:["\u003E Initializing neural interface...","\u003E Signal acquired. Cognitive node: SAM.","\u003E Nanjing University \u2192 Peking University.","\u003E Age: 22. Status: In pursuit of knowledge.","\u003E \u201CThe cosmos is within us.\u201D 鈥� C. Sagan","\u003E SYSTEM READY. // engage.","\u003E System initialization complete... Welcome to SAM\u2019s digital space.","\u003E NJU \u2192 PKU ... endless exploration.","\u003E \u201CWe are all just prisoners here, of our own device\u201D","\u003E Interests: AI \u00B7 Quantum Computing \u00B7 Cyberpunk \u00B7 Anime","\u003E SYSTEM READY /// feel free to browse"]};
+var twIdx=0,twChar=0,twEl=document.getElementById("tw"),twTimer=null;
+function restartTypewriter(){if(twTimer){clearTimeout(twTimer);twTimer=null}twIdx=0;twChar=0;twEl.textContent="";setTimeout(typeTw,200)}
+function typeTw(){var arr=twPhrases[localStorage.getItem("sam_lang")||"zh"];if(!arr||!arr.length){twTimer=setTimeout(typeTw,500);return}if(twChar<arr[twIdx].length){twEl.textContent+=arr[twIdx][twChar];twChar++;twTimer=setTimeout(typeTw,25+Math.random()*35)}else{twTimer=setTimeout(eraseTw,2000)}}
+function eraseTw(){if(twChar>0){twEl.textContent=twEl.textContent.slice(0,-1);twChar--;twTimer=setTimeout(eraseTw,12)}else{var arr=twPhrases[localStorage.getItem("sam_lang")||"zh"];twIdx=(twIdx+1)%arr.length;twTimer=setTimeout(typeTw,500)}}
+var i18n={zh:{nav_home:"\u9996\u9875",nav_about:"\u5173\u4E8E",nav_anime:"\u756A\u5267",nav_games:"\u6E38\u620F",hero_tagline:"RESEARCHER \u00B7 EXPLORER \u00B7 CODER",mp_title:"\u266B HANS ZIMMER 鈥� CORNFIELD CHASE",mp_ready:"\u25A0 \u5C31\u7EEA",anime_section_title:"\u25C6 \u756A\u5267\u63A8\u8350",anime_section_desc:"\u547D\u8FD0\u77F3\u4E4B\u95E8 \u00B7 Re:Zero \u00B7 \u5200\u5251\u795E\u57DF \u00B7 \u4E00\u62F3\u8D85\u4EBA \u2026\u2026",anime_section_btn:"\u8FDB\u5165\u756A\u5267\u4E16\u754C \u25B8",game_section_title:"\u25C6 \u6E38\u620F\u5F55",game_section_desc:"\u9ED1\u6697\u4E4B\u9B42 \u00B7 \u827E\u5C14\u767B\u6CD5\u73AF \u00B7 \u53EA\u72FC \u00B7 \u9ED1\u795E\u8BDD\u609F\u7A7A \u2026\u2026",game_section_btn:"\u8FDB\u5165\u6E38\u620F\u4E16\u754C \u25B8"},en:{nav_home:"Home",nav_about:"About",nav_anime:"Anime",nav_games:"Games",hero_tagline:"RESEARCHER \u00B7 EXPLORER \u00B7 CODER",mp_title:"\u266B HANS ZIMMER 鈥� CORNFIELD CHASE",mp_ready:"\u25A0 Ready",anime_section_title:"\u25C6 Anime Favorites",anime_section_desc:"Steins;Gate \u00B7 Re:Zero \u00B7 SAO \u00B7 One Punch Man \u2026\u2026",anime_section_btn:"Enter Anime World \u25B8",game_section_title:"\u25C6 Games Log",game_section_desc:"Dark Souls \u00B7 Elden Ring \u00B7 Sekiro \u00B7 Black Myth \u2026\u2026",game_section_btn:"Enter Game World \u25B8"}};
+function applyLang(l){localStorage.setItem("sam_lang",l);document.getElementById("langToggle").textContent=l==="zh"?"EN":"\u4E2D";document.querySelectorAll("[data-i18n]").forEach(function(el){var k=el.dataset.i18n;if(i18n[l]&&i18n[l][k])el.innerHTML=i18n[l][k]});restartTypewriter();var lb=document.getElementById("mp-loop");if(lb){var l2=localStorage.getItem("sam_lang")||"zh";lb.textContent=l2==="zh"?lb.classList.contains("active")?"\uD83D\uDD01 寰幆涓�":"\uD83D\uDD01 寰幆":lb.classList.contains("active")?"\uD83D\uDD01 Looping":"\uD83D\uDD01 Loop"}}
+var sl=localStorage.getItem("sam_lang")||"zh";document.getElementById("langToggle").textContent=sl==="zh"?"EN":"\u4E2D";
+document.getElementById("langToggle").addEventListener("click",function(){var c=localStorage.getItem("sam_lang")||"zh";applyLang(c==="zh"?"en":"zh")});setTimeout(function(){applyLang(sl)},10);
 </script>
 </body>
 </html>
