@@ -120,7 +120,9 @@ html:has(.home-page) { color-scheme: dark; }
 
 .chapter--games { --link: #dca979; }
 .chapter--games .chapter-scene { background: #070305; }
-.chapter--games .chapter-art { height: clamp(340px, 66svh, 680px); background: transparent; }
+.chapter--games .chapter-layout { grid-template-columns: minmax(0, 1.45fr) minmax(250px, .75fr); grid-template-areas: "art title"; }
+.chapter--games h2 { grid-area: title; }
+.chapter--games .chapter-art { grid-area: art; height: clamp(340px, 66svh, 680px); background: transparent; }
 .chapter--games .chapter-art img { object-fit: contain; mix-blend-mode: screen; }
 .chapter--anime { --ink: #eee0ed; --link: #d9b5d4; }
 .chapter--anime .chapter-scene { background: #17131c; }
@@ -162,12 +164,14 @@ html:has(.home-page) { color-scheme: dark; }
 
 @media (max-width: 900px) {
   .chapter-layout { padding-right: 32px; padding-left: 32px; grid-template-columns: 230px minmax(0, 1fr); gap: 24px; }
+  .chapter--games .chapter-layout { grid-template-columns: minmax(0, 1fr) 230px; }
   .chapter h2 { font-size: 30px; }
   .chapter--academic .chapter-layout { grid-template-columns: 140px minmax(0, 1fr); padding-left: 32px; padding-right: 12px; gap: 10px; }
 }
 @media (max-width: 700px) {
   .chapter-scene { min-height: 600px; }
   .chapter-layout { padding: 40px 26px; grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .chapter--games .chapter-layout { grid-template-columns: minmax(0, 1fr); grid-template-areas: "art" "title"; }
   .chapter h2 { font-size: 28px; }
   .chapter-art, .chapter--games .chapter-art { width: 100%; height: clamp(300px, 53svh, 500px); }
   .chapter--academic .chapter-layout { padding: 40px 0; grid-template-columns: minmax(0, 1fr); gap: 20px; }
