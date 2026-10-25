@@ -48,8 +48,7 @@ html:has(.home-page) { color-scheme: dark; }
 }
 .chapter-backdrop { position: absolute; z-index: -3; inset: -3%; overflow: clip; }
 .chapter--academic .chapter-backdrop {
-  background: linear-gradient(90deg, #080e14f5 4%, #080e14ed 38%, #080e14ce 100%), url("../images/home/mos-6502.webp") center / cover;
-  filter: grayscale(.85);
+  background: linear-gradient(90deg, #082b1fed 4%, #103e2bd9 38%, #17583fc4 100%), url("../images/home/mos-6502.webp") center / cover;
 }
 .chapter--games .chapter-backdrop {
   background: #070305;
@@ -82,38 +81,41 @@ html:has(.home-page) { color-scheme: dark; }
   background: #090d11;
 }
 .chapter-art img { width: 100%; height: 100%; object-fit: cover; }
-.chapter--academic { --ink: #dce4eb; --link: #b7cddc; }
+.chapter--academic { --ink: #e4f2d9; --link: #e4c675; --chip-gold: #c9aa62; --chip-signal: #ffe4a1; }
+.chapter--academic .chapter-scene { background: #0a2f21; }
 .chapter--academic .chapter-layout { max-width: 1600px; grid-template-columns: 180px minmax(0, 1fr); gap: 20px; padding: 40px 32px 40px 64px; }
 .chapter--academic .chapter-art { height: clamp(420px, 78svh, 800px); max-width: none; background: transparent; }
 .cpu-architecture { --cpu-open: 1; --cpu-core: 1; --cpu-detail: 1; --cpu-bus: 1; --cpu-io: 1; }
 .cpu-diagram { display: block; width: 100%; height: 100%; overflow: visible; }
-.cpu-diagram text { fill: #d9e0e5; font: 400 18px "Fira Code", Consolas, "Courier New", monospace; text-anchor: middle; }
+.cpu-diagram text { fill: #e5f2d9; font: 400 18px "Fira Code", Consolas, "Courier New", monospace; text-anchor: middle; }
 .cpu-assembly { transform-box: view-box; transform-origin: 600px 400px; transform: scale(calc(.52 + var(--cpu-open) * .48)); }
-.cpu-package { fill: #0c151d; stroke: #a4aeb5; stroke-width: 1.5; vector-effect: non-scaling-stroke; }
-.cpu-die-boundary { fill: none; stroke: #465460; stroke-width: 1; }
-.cpu-pin-one { fill: #afb9c0; }
+.cpu-package { fill: #0d402c; stroke: var(--chip-gold); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.cpu-die-boundary { fill: none; stroke: #4b8053; stroke-width: 1; }
+.cpu-pin-one { fill: #ebce83; }
 .cpu-architecture:focus-visible { outline: none; }
-.cpu-architecture:focus-visible .cpu-package { stroke: #e0eef7; stroke-width: 2; }
-.cpu-pins { fill: #7c898f; stroke: #abb5ba; stroke-width: .5; }
+.cpu-architecture:focus-visible .cpu-package { stroke: #fff0bd; stroke-width: 2; }
+.cpu-pins { fill: #c4a258; stroke: #ebcf86; stroke-width: .5; }
 .cpu-diagram .cpu-cover-label { font-size: 38px; opacity: calc(1 - var(--cpu-core)); }
 .cpu-core { opacity: var(--cpu-core); }
 .cpu-stage { transform-box: view-box; transform: translateX(calc((1 - var(--cpu-core)) * var(--cpu-shift))); }
 .cpu-fetch { --cpu-shift: 28px; }
 .cpu-execute { --cpu-shift: -28px; }
-.cpu-stage-boundary { fill: #12202b; stroke: #4e626f; stroke-width: 1; }
-.cpu-diagram .cpu-stage-label { fill: #aebcc7; font-size: 17px; }
-.cpu-block { fill: #1a2b38; stroke: #a3b0b9; stroke-width: 1.2; }
-.cpu-alu-symbol { fill: #253846; }
+.cpu-stage-boundary { fill: #103a29; stroke: #57905d; stroke-width: 1; }
+.cpu-diagram .cpu-stage-label { fill: #cbe3b5; font-size: 17px; }
+.cpu-block { fill: #1b5b3d; stroke: #a6b56a; stroke-width: 1.2; }
+.cpu-alu-symbol { fill: #24794e; }
 .cpu-details { opacity: var(--cpu-detail); }
 .cpu-register-rows { fill: url(#cpu-register-rows); }
-.cpu-pipeline-register { fill: #899ca8; }
+.cpu-diagram #cpu-register-rows path { stroke: #74a761; }
+.cpu-diagram #cpu-arrow path { fill: var(--chip-gold); }
+.cpu-pipeline-register { fill: #d2b66b; }
 .cpu-bus { opacity: var(--cpu-bus); }
-.cpu-datapath { fill: none; stroke: #98abb9; stroke-width: 1.6; }
-.cpu-junctions { fill: #98abb9; }
-.cpu-control-path { fill: none; stroke: #b59c78; stroke-width: 1.2; stroke-dasharray: 4 4; }
+.cpu-datapath { fill: none; stroke: var(--chip-gold); stroke-width: 1.6; }
+.cpu-junctions { fill: var(--chip-gold); }
+.cpu-control-path { fill: none; stroke: #83bb72; stroke-width: 1.2; stroke-dasharray: 4 4; }
 .cpu-io { opacity: var(--cpu-io); }
-.cpu-traces { fill: none; stroke: #68818e; stroke-width: 1.3; opacity: calc(var(--cpu-io) * .65); }
-.cpu-signals { fill: none; stroke: #c0ced7; stroke-width: 1.6; stroke-linecap: butt; }
+.cpu-traces { fill: none; stroke: var(--chip-gold); stroke-width: 1.3; opacity: calc(var(--cpu-io) * .72); }
+.cpu-signals { fill: none; stroke: var(--chip-signal); stroke-width: 1.6; stroke-linecap: butt; }
 .cpu-signals > :is(path, use) { stroke-dasharray: 100 100; stroke-dashoffset: 100; opacity: 0; }
 .cpu-io-signals > use:not(.is-energized) { display: none; }
 .cpu-label-mobile { display: none; }

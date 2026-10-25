@@ -170,7 +170,8 @@
       const arrival = reduced.matches ? 1 : phase(viewport - rect.top, 0, viewport * (academic ? 1.8 : 1.4));
       // Use the whole visible scene for closing, reaching zero only once it leaves.
       // A pinned scene stays open; no extra scroll distance is used for closing.
-      const departure = reduced.matches ? 1 : phase(sceneRect.bottom, 0, sceneRect.height);
+      // Anime is the last chapter: keep its artwork and petals complete at the footer.
+      const departure = reduced.matches || chapter.dataset.chapter === 'anime' ? 1 : phase(sceneRect.bottom, 0, sceneRect.height);
       const progress = arrival * departure;
       const visible = rect.bottom > 0 && rect.top < viewport && departure > 0;
       if (academic && visible && !chapter.classList.contains('is-current')) randomizeCircuit();
