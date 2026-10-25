@@ -153,13 +153,19 @@
     for (const chapter of chapters) {
       const rect = chapter.getBoundingClientRect();
       const academic = chapter.dataset.chapter === 'academic';
-      const visible = rect.bottom > 0 && rect.top < viewport;
+      const raw = reduced.matches ? 1 : Math.max(0, Math.min(1, (viewport * (academic ? .55 : .7) - rect.top) / (viewport * (academic ? 1.35 : 1.1))));
+      const arrival = raw * raw * (3 - 2 * raw);
+      // Fold only as the scene actually moves upward out of the viewport.
+      // A pinned scene stays open; no extra scroll distance is used for closing.
+      const sceneTop = chapter.querySelector('.chapter-scene').getBoundingClientRect().top;
+      const departure = reduced.matches ? 1 : 1 - phase(-sceneTop, 0, viewport * .55);
+      const progress = arrival * departure;
+      const visible = rect.bottom > 0 && rect.top < viewport && departure > 0;
       if (academic && visible && !chapter.classList.contains('is-current')) randomizeCircuit();
       chapter.classList.toggle('is-current', visible);
-      const raw = reduced.matches ? 1 : Math.max(0, Math.min(1, (viewport * (academic ? .55 : .7) - rect.top) / (viewport * (academic ? 1.35 : 1.1))));
-      const progress = raw * raw * (3 - 2 * raw);
       chapter.style.setProperty('--reveal', progress.toFixed(4));
-      chapter.style.setProperty('--scan-opacity', (4 * raw * (1 - raw)).toFixed(4));
+      chapter.style.setProperty('--exit-visibility', departure.toFixed(4));
+      chapter.style.setProperty('--scan-opacity', (4 * progress * (1 - progress)).toFixed(4));
       if (academic && architecture) {
         architecture.style.setProperty('--cpu-open', phase(progress, .05, .55).toFixed(4));
         architecture.style.setProperty('--cpu-core', phase(progress, .28, .58).toFixed(4));

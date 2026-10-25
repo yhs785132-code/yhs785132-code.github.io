@@ -35,7 +35,7 @@ html:has(.home-page) { color-scheme: dark; }
 .home-scroll[data-scroll-effects="on"] .home-intro.is-visible .terminal-cursor { animation: cursor-blink 1.3s step-end infinite; }
 @keyframes cursor-blink { 0%, 45% { opacity: .8; } 46%, 100% { opacity: 0; } }
 
-.chapter { --reveal: 1; --scan-opacity: 0; position: relative; min-height: 100svh; }
+.chapter { --reveal: 1; --exit-visibility: 1; --scan-opacity: 0; position: relative; min-height: 100svh; }
 .chapter-scene {
   position: relative;
   isolation: isolate;
@@ -134,9 +134,10 @@ html:has(.home-page) { color-scheme: dark; }
 /* Enhancement only: the unenhanced document always shows its links and artwork. */
 .home-scroll[data-scroll-effects="on"] .chapter { min-height: 150svh; }
 .home-scroll[data-scroll-effects="on"] .chapter-scene { position: sticky; top: 0; }
+.home-scroll[data-scroll-effects="on"] .chapter-atmosphere { opacity: var(--exit-visibility); }
 
 .home-scroll[data-scroll-effects="on"] .chapter--games .chapter-art {
-  clip-path: inset(calc((1 - var(--reveal)) * 49.9%) 0);
+  clip-path: inset(calc((1 - var(--reveal)) * 50%) 0);
 }
 .home-scroll[data-scroll-effects="on"] .chapter--games .chapter-art img { transform: scale(calc(1.1 - var(--reveal) * .1)); }
 .home-scroll[data-scroll-effects="on"] .chapter--anime .chapter-art { background: none; }
