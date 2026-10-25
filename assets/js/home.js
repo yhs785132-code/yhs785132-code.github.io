@@ -13,6 +13,7 @@
   let departing = false;
   let atmosphereFrame = 0;
   let atmosphereTime = 0;
+  let fieldsNeedSizing = true;
   const architecture = document.querySelector('.cpu-architecture');
   function randomizeCircuit() {
     if (!architecture) return;
@@ -40,6 +41,10 @@
   function phase(progress, start, end) {
     const value = Math.max(0, Math.min(1, (progress - start) / (end - start)));
     return value * value * (3 - 2 * value);
+  }
+  function setProgress(style, name, value) {
+    const next = value.toFixed(4);
+    if (style.getPropertyValue(name) !== next) style.setProperty(name, next);
   }
 
   function ember(field, initial = false) {
@@ -132,10 +137,12 @@
   function syncAtmospheres() {
     const enabled = !reduced.matches && !document.hidden && !departing;
     for (const field of fields) {
+      const wasVisible = field.visible;
       field.visible = enabled && field.chapter.classList.contains('is-current');
-      if (field.visible) sizeField(field);
-      else field.context.clearRect(0, 0, field.width, field.height);
+      if (field.visible && (!wasVisible || fieldsNeedSizing)) sizeField(field);
+      else if (!field.visible && wasVisible) field.context.clearRect(0, 0, field.width, field.height);
     }
+    fieldsNeedSizing = false;
     if (fields.some(field => field.visible)) {
       if (!atmosphereFrame) atmosphereFrame = requestAnimationFrame(drawAtmospheres);
     } else {
@@ -148,34 +155,38 @@
     frame = 0;
     if (document.hidden || departing) return;
     root.classList.remove('is-idle');
-    root.dataset.scrollEffects = reduced.matches ? 'off' : 'on';
+    const mode = reduced.matches ? 'off' : 'on';
+    if (root.dataset.scrollEffects !== mode) root.dataset.scrollEffects = mode;
     const viewport = window.innerHeight;
-    for (const chapter of chapters) {
-      const rect = chapter.getBoundingClientRect();
+    // Read geometry together before changing styles to avoid layout work between scenes.
+    const positions = chapters.map(chapter => ({
+      chapter, rect: chapter.getBoundingClientRect(),
+      sceneRect: chapter.querySelector('.chapter-scene').getBoundingClientRect()
+    }));
+    const introRect = intro?.getBoundingClientRect();
+    for (const { chapter, rect, sceneRect } of positions) {
       const academic = chapter.dataset.chapter === 'academic';
-      const raw = reduced.matches ? 1 : Math.max(0, Math.min(1, (viewport * (academic ? .55 : .7) - rect.top) / (viewport * (academic ? 1.35 : 1.1))));
-      const arrival = raw * raw * (3 - 2 * raw);
-      // Fold only as the scene actually moves upward out of the viewport.
+      // Start at the first visible edge and spread expansion across the entrance.
+      const arrival = reduced.matches ? 1 : phase(viewport - rect.top, 0, viewport * (academic ? 1.8 : 1.4));
+      // Use the whole visible scene for closing, reaching zero only once it leaves.
       // A pinned scene stays open; no extra scroll distance is used for closing.
-      const sceneTop = chapter.querySelector('.chapter-scene').getBoundingClientRect().top;
-      const departure = reduced.matches ? 1 : 1 - phase(-sceneTop, 0, viewport * .55);
+      const departure = reduced.matches ? 1 : phase(sceneRect.bottom, 0, sceneRect.height);
       const progress = arrival * departure;
       const visible = rect.bottom > 0 && rect.top < viewport && departure > 0;
       if (academic && visible && !chapter.classList.contains('is-current')) randomizeCircuit();
       chapter.classList.toggle('is-current', visible);
-      chapter.style.setProperty('--reveal', progress.toFixed(4));
-      chapter.style.setProperty('--exit-visibility', departure.toFixed(4));
-      chapter.style.setProperty('--scan-opacity', (4 * progress * (1 - progress)).toFixed(4));
+      setProgress(chapter.style, '--reveal', progress);
+      setProgress(chapter.style, '--exit-visibility', departure);
+      setProgress(chapter.style, '--scan-opacity', 4 * progress * (1 - progress));
       if (academic && architecture) {
-        architecture.style.setProperty('--cpu-open', phase(progress, .05, .55).toFixed(4));
-        architecture.style.setProperty('--cpu-core', phase(progress, .28, .58).toFixed(4));
-        architecture.style.setProperty('--cpu-detail', phase(progress, .52, .82).toFixed(4));
-        architecture.style.setProperty('--cpu-bus', phase(progress, .64, .94).toFixed(4));
-        architecture.style.setProperty('--cpu-io', phase(progress, .16, .62).toFixed(4));
+        setProgress(architecture.style, '--cpu-open', phase(progress, .05, .55));
+        setProgress(architecture.style, '--cpu-core', phase(progress, .28, .58));
+        setProgress(architecture.style, '--cpu-detail', phase(progress, .52, .82));
+        setProgress(architecture.style, '--cpu-bus', phase(progress, .64, .94));
+        setProgress(architecture.style, '--cpu-io', phase(progress, .16, .62));
       }
     }
-    const rect = intro?.getBoundingClientRect();
-    intro?.classList.toggle('is-visible', !reduced.matches && rect.bottom > 0 && rect.top < viewport);
+    intro?.classList.toggle('is-visible', !reduced.matches && introRect.bottom > 0 && introRect.top < viewport);
     syncAtmospheres();
   }
   function queue() {
@@ -189,7 +200,7 @@
     syncAtmospheres();
   }
   window.addEventListener('scroll', queue, { passive: true });
-  window.addEventListener('resize', queue, { passive: true });
+  window.addEventListener('resize', () => { fieldsNeedSizing = true; queue(); }, { passive: true });
   document.addEventListener('visibilitychange', () => { if (document.hidden) stop(); else queue(); });
   reduced.addEventListener('change', queue);
   window.addEventListener('pageswap', () => { departing = true; stop(); });
