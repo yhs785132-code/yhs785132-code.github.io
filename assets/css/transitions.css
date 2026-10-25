@@ -1,0 +1,240 @@
+/* Native snapshots keep the selected artwork, text and scroll position intact. */
+@view-transition { navigation: auto; }
+
+/* Leave the real navigation outside the snapshots so it remains clickable. */
+html { view-transition-name: none; }
+.world-content {
+  display: flow-root;
+  background: var(--page);
+  view-transition-name: world;
+}
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-group(world) {
+  height: var(--world-viewport, 100dvh) !important;
+  overflow: clip;
+  animation-duration: 580ms;
+  animation-timing-function: ease;
+  background: transparent;
+}
+html[data-world-transition="academic-to-anime"]::view-transition-group(world),
+html[data-world-transition="anime-to-academic"]::view-transition-group(world) { animation-duration: 650ms; }
+html[data-world-transition="games-to-anime"]::view-transition-group(world),
+html[data-world-transition="anime-to-games"]::view-transition-group(world) { animation-duration: 520ms; }
+html[data-world-transition="fade"]::view-transition-group(world) { animation: none; }
+::view-transition-image-pair(world) { isolation: isolate; }
+::view-transition-old(world),
+::view-transition-new(world) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  mix-blend-mode: normal;
+  backface-visibility: hidden;
+  animation: 140ms ease both;
+}
+/* Keep one complete, opaque page underneath every reveal. */
+::view-transition-old(world) { animation: none; opacity: 1; z-index: 1; }
+::view-transition-new(world) { animation-name: world-fade-in; z-index: 2; }
+
+/* A viewport fade preserves context when a footer link is used after scrolling. */
+html[data-world-transition="viewport-fade"] { view-transition-name: root; }
+html[data-world-transition="viewport-fade"] .world-content { view-transition-name: none; }
+html[data-transition-scope="viewport"] { view-transition-name: root; }
+html[data-transition-scope="viewport"] .world-content { view-transition-name: none; }
+::view-transition-group(root) { animation-duration: 140ms; }
+::view-transition-old(root), ::view-transition-new(root) {
+  mix-blend-mode: normal;
+  animation: 140ms linear both;
+}
+::view-transition-old(root) { animation: none; opacity: 1; z-index: 1; }
+::view-transition-new(root) { animation-name: world-fade-in; z-index: 2; }
+
+/* Paper stays visible underneath the expanding night screen. */
+html[data-world-transition="academic-to-games"]::view-transition-old(world) {
+  animation: paper-recede 580ms cubic-bezier(.22,.7,.22,1) both;
+}
+html[data-world-transition="academic-to-games"]::view-transition-new(world) {
+  animation: screen-open 580ms cubic-bezier(.22,.7,.22,1) both;
+}
+html[data-world-transition="games-to-academic"]::view-transition-old(world) {
+  z-index: 3;
+  animation: screen-close 580ms cubic-bezier(.45,0,.25,1) both;
+}
+html[data-world-transition="games-to-academic"]::view-transition-new(world) {
+  animation: paper-return 580ms cubic-bezier(.22,.7,.22,1) both;
+}
+
+/* The right edge of the academic sheet turns around a left-hand spine. */
+html[data-world-transition="academic-to-anime"]::view-transition-old(world) {
+  z-index: 3;
+  transform-origin: left center;
+  animation: paper-turn-away 650ms cubic-bezier(.45,0,.2,1) both;
+}
+html[data-world-transition="academic-to-anime"]::view-transition-new(world) {
+  animation: none;
+}
+html[data-world-transition="anime-to-academic"]::view-transition-old(world) {
+  animation: none;
+}
+html[data-world-transition="anime-to-academic"]::view-transition-new(world) {
+  z-index: 3;
+  transform-origin: left center;
+  animation: paper-turn-back 650ms cubic-bezier(.45,0,.2,1) both;
+}
+
+/* Three strips of the actual screen form a brief, alternating panel wipe. */
+html[data-world-transition="games-to-anime"]::view-transition-old(world),
+html[data-world-transition="anime-to-games"]::view-transition-old(world) {
+  z-index: 3;
+  mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+  mask-repeat: no-repeat;
+  mask-size: 100% 34%;
+  mask-position: 0 0, 0 50%, 0 100%;
+}
+html[data-world-transition="games-to-anime"]::view-transition-old(world) {
+  animation: panels-part 520ms cubic-bezier(.45,0,.2,1) both;
+}
+html[data-world-transition="games-to-anime"]::view-transition-new(world) {
+  animation: none;
+}
+html[data-world-transition="anime-to-games"]::view-transition-old(world) {
+  animation: panels-gather 520ms cubic-bezier(.45,0,.2,1) both;
+}
+html[data-world-transition="anime-to-games"]::view-transition-new(world) {
+  animation: none;
+}
+
+/* The city remains an opaque backing as each destination opens over it. */
+html[data-world-transition="home-to-academic"]::view-transition-new(world) {
+  animation: academic-enter 580ms cubic-bezier(.22,.7,.22,1) both;
+}
+html[data-world-transition="academic-to-home"]::view-transition-old(world) {
+  z-index: 3;
+  animation: academic-enter 580ms cubic-bezier(.45,0,.25,1) reverse both;
+}
+html[data-world-transition="home-to-games"]::view-transition-new(world) {
+  animation: screen-open 580ms cubic-bezier(.22,.7,.22,1) both;
+}
+html[data-world-transition="games-to-home"]::view-transition-old(world) {
+  z-index: 3;
+  animation: screen-close 580ms cubic-bezier(.45,0,.25,1) both;
+}
+html[data-world-transition="home-to-anime"]::view-transition-new(world) {
+  animation: illustration-enter 580ms cubic-bezier(.22,.7,.22,1) both;
+}
+html[data-world-transition="anime-to-home"]::view-transition-old(world) {
+  z-index: 3;
+  animation: illustration-enter 580ms cubic-bezier(.45,0,.25,1) reverse both;
+}
+html[data-world-transition="academic-to-home"]::view-transition-new(world),
+html[data-world-transition="games-to-home"]::view-transition-new(world),
+html[data-world-transition="anime-to-home"]::view-transition-new(world) { animation: none; }
+
+/* Home chapters use the visible viewport, including the destination header. */
+html[data-transition-scope="viewport"]::view-transition-group(root) {
+  height: 100dvh;
+  overflow: clip;
+  animation: none;
+}
+html[data-transition-scope="viewport"]::view-transition-old(root),
+html[data-transition-scope="viewport"]::view-transition-new(root) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+html[data-world-transition="home-to-academic"]::view-transition-new(root) {
+  animation: chip-to-paper 580ms cubic-bezier(.22,.7,.22,1) both;
+}
+html[data-world-transition="academic-to-home"]::view-transition-old(root) {
+  z-index: 3;
+  animation: chip-to-paper 580ms cubic-bezier(.45,0,.25,1) reverse both;
+}
+html[data-world-transition="home-to-games"]::view-transition-new(root) {
+  animation: screen-open 580ms cubic-bezier(.22,.7,.22,1) both;
+}
+html[data-world-transition="games-to-home"]::view-transition-old(root) {
+  z-index: 3;
+  animation: screen-close 580ms cubic-bezier(.45,0,.25,1) both;
+}
+html[data-world-transition="home-to-anime"]::view-transition-new(root),
+html[data-world-transition="anime-to-home"]::view-transition-old(root) {
+  mask-image: linear-gradient(#000 0 0), linear-gradient(#000 0 0), linear-gradient(#000 0 0);
+  mask-repeat: no-repeat;
+  mask-size: 34% 100%;
+  mask-position: 0 0, 50% 100%, 100% 0;
+}
+html[data-world-transition="home-to-anime"]::view-transition-new(root) { animation: illustrated-panels 620ms cubic-bezier(.22,.7,.22,1) both; }
+html[data-world-transition="anime-to-home"]::view-transition-old(root) { z-index: 3; animation: illustrated-panels 620ms cubic-bezier(.45,0,.25,1) reverse both; }
+html[data-world-transition="academic-to-home"]::view-transition-new(root),
+html[data-world-transition="games-to-home"]::view-transition-new(root),
+html[data-world-transition="anime-to-home"]::view-transition-new(root) { animation: none; }
+
+@keyframes chip-to-paper { from { clip-path: inset(100% 0 0); } to { clip-path: inset(0); } }
+@keyframes illustrated-panels {
+  0% { mask-size: 34% 0, 34% 0, 34% 0; }
+  30% { mask-size: 34% 48%, 34% 18%, 34% 35%; }
+  100% { mask-size: 34% 100%, 34% 100%, 34% 100%; }
+}
+
+@keyframes academic-enter {
+  from { clip-path: inset(0 0 0 100%); }
+  to { clip-path: inset(0); }
+}
+@keyframes illustration-enter {
+  from { clip-path: inset(0 100% 0 0); }
+  to { clip-path: inset(0); }
+}
+@keyframes world-fade-in { from { opacity: 0; } }
+@keyframes paper-recede {
+  from { transform: scale(1); }
+  to { transform: scale(.985) translateY(8px); }
+}
+@keyframes screen-open {
+  from { clip-path: inset(47% 7%); }
+  to { clip-path: inset(0); }
+}
+@keyframes screen-close {
+  from { clip-path: inset(0); }
+  to { clip-path: inset(50% 7%); }
+}
+@keyframes paper-return {
+  from { transform: translateY(12px); }
+  to { transform: translateY(0); }
+}
+@keyframes paper-turn-away {
+  from { transform: perspective(1800px) rotateY(0); }
+  to { transform: perspective(1800px) rotateY(90deg); }
+}
+@keyframes paper-turn-back {
+  from { transform: perspective(1800px) rotateY(90deg); }
+  to { transform: perspective(1800px) rotateY(0); }
+}
+@keyframes panels-part {
+  0% { mask-size: 100% 34%; mask-position: 0 0, 0 50%, 0 100%; }
+  25% { mask-size: 100% 32%; mask-position: 0 0, 0 50%, 0 100%; }
+  100% { mask-size: 100% 32%; mask-position: -105vw 0, 105vw 50%, -105vw 100%; }
+}
+@keyframes panels-gather {
+  0% { mask-size: 100% 34%; mask-position: 0 0, 0 50%, 0 100%; }
+  40% { mask-size: 92% 20%; mask-position: 50% 36%, 50% 50%, 50% 64%; }
+  100% { mask-size: 92% 0%; mask-position: 50% 50%, 50% 50%, 50% 50%; }
+}
+
+/* Motion preferences apply even if JavaScript is unavailable. */
+@media (prefers-reduced-motion: reduce) {
+  html::view-transition-group(world) { animation: none !important; }
+  html::view-transition-group(root), html::view-transition-old(root), html::view-transition-new(root) { animation-duration: 120ms !important; }
+  html::view-transition-old(root), html::view-transition-new(root) { clip-path: none !important; mask-image: none !important; transform: none !important; }
+  html::view-transition-old(world), html::view-transition-new(world) {
+    animation: 120ms linear both !important;
+    transform: none !important;
+    filter: none !important;
+    clip-path: none !important;
+    mask-image: none !important;
+  }
+  html::view-transition-old(world) { animation: none !important; opacity: 1; z-index: 1 !important; }
+  html::view-transition-new(world) { animation-name: world-fade-in !important; z-index: 2 !important; }
+}

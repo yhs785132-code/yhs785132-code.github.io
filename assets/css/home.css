@@ -1,0 +1,192 @@
+@font-face {
+  font-family: "Fira Code";
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url("../fonts/fira-code-latin.woff2") format("woff2");
+}
+html:has(.home-page) { color-scheme: dark; }
+.home-page {
+  --page: #090d11;
+  --ink: #dce7e1;
+  --muted: #899c92;
+  --link: #b3d9c3;
+  font-family: "Fira Code", Consolas, "Courier New", monospace;
+  font-variant-ligatures: none;
+}
+.home-scroll { overflow: clip; }
+.home-intro {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 32px 22px;
+}
+.home-intro h1 {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  font-size: clamp(24px, 3.2vw, 40px);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: normal;
+}
+.home-intro h1 > span:first-child { color: #789c88; }
+.terminal-cursor { width: .52em; height: 1em; margin-left: .35em; background: #b3d9c3; opacity: .8; }
+.home-scroll[data-scroll-effects="on"] .home-intro.is-visible .terminal-cursor { animation: cursor-blink 1.3s step-end infinite; }
+@keyframes cursor-blink { 0%, 45% { opacity: .8; } 46%, 100% { opacity: 0; } }
+
+.chapter { --reveal: 1; --scan-opacity: 0; position: relative; min-height: 100svh; }
+.chapter-scene {
+  position: relative;
+  isolation: isolate;
+  min-height: 580px;
+  height: 100svh;
+  display: grid;
+  align-items: center;
+  overflow: clip;
+  background: #0b1417;
+}
+.chapter-backdrop { position: absolute; z-index: -3; inset: -3%; overflow: clip; }
+.chapter--academic .chapter-backdrop {
+  background: linear-gradient(90deg, #080e14f5 4%, #080e14ed 38%, #080e14ce 100%), url("../images/home/mos-6502.webp") center / cover;
+  filter: grayscale(.85);
+}
+.chapter--games .chapter-backdrop {
+  background: #070305;
+}
+.chapter-atmosphere { position: absolute; z-index: 2; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.chapter--anime .chapter-backdrop {
+  background: linear-gradient(90deg, #1a1021e8 0%, #22132bc9 38%, #21132f80), url("../images/anime/anime.webp") center / cover;
+}
+.chapter-layout {
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 50px 64px;
+  display: grid;
+  grid-template-columns: minmax(250px, .75fr) minmax(0, 1.45fr);
+  align-items: center;
+  gap: 50px;
+}
+.chapter h2 { margin: 0; font-size: clamp(28px, 3.2vw, 42px); line-height: 1.4; font-weight: 400; }
+.chapter h2 a { color: var(--ink); text-decoration: none; }
+.chapter h2 a::after { content: ">"; display: inline-block; margin-left: .7em; color: var(--link); opacity: 0; }
+.chapter h2 a:is(:hover, :focus-visible)::after { opacity: 1; }
+.chapter h2 a:focus-visible, .chapter-art:focus-visible { outline: 1px solid var(--link); outline-offset: 8px; }
+.chapter-art {
+  display: block;
+  position: relative;
+  height: clamp(340px, 62svh, 660px);
+  min-width: 0;
+  overflow: clip;
+  background: #090d11;
+}
+.chapter-art img { width: 100%; height: 100%; object-fit: cover; }
+.chapter--academic { --ink: #dce4eb; --link: #b7cddc; }
+.chapter--academic .chapter-layout { max-width: 1600px; grid-template-columns: 180px minmax(0, 1fr); gap: 20px; padding: 40px 32px 40px 64px; }
+.chapter--academic .chapter-art { height: clamp(420px, 78svh, 800px); max-width: none; background: transparent; }
+.cpu-architecture { --cpu-open: 1; --cpu-core: 1; --cpu-detail: 1; --cpu-bus: 1; --cpu-io: 1; }
+.cpu-diagram { display: block; width: 100%; height: 100%; overflow: visible; }
+.cpu-diagram text { fill: #d9e0e5; font: 400 18px "Fira Code", Consolas, "Courier New", monospace; text-anchor: middle; }
+.cpu-assembly { transform-box: view-box; transform-origin: 600px 400px; transform: scale(calc(.52 + var(--cpu-open) * .48)); }
+.cpu-package { fill: #0c151d; stroke: #a4aeb5; stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.cpu-die-boundary { fill: none; stroke: #465460; stroke-width: 1; }
+.cpu-pin-one { fill: #afb9c0; }
+.cpu-architecture:focus-visible { outline: none; }
+.cpu-architecture:focus-visible .cpu-package { stroke: #e0eef7; stroke-width: 2; }
+.cpu-pins { fill: #7c898f; stroke: #abb5ba; stroke-width: .5; }
+.cpu-diagram .cpu-cover-label { font-size: 38px; opacity: calc(1 - var(--cpu-core)); }
+.cpu-core { opacity: var(--cpu-core); }
+.cpu-stage { transform-box: view-box; transform: translateX(calc((1 - var(--cpu-core)) * var(--cpu-shift))); }
+.cpu-fetch { --cpu-shift: 28px; }
+.cpu-execute { --cpu-shift: -28px; }
+.cpu-stage-boundary { fill: #12202b; stroke: #4e626f; stroke-width: 1; }
+.cpu-diagram .cpu-stage-label { fill: #aebcc7; font-size: 17px; }
+.cpu-block { fill: #1a2b38; stroke: #a3b0b9; stroke-width: 1.2; }
+.cpu-alu-symbol { fill: #253846; }
+.cpu-details { opacity: var(--cpu-detail); }
+.cpu-register-rows { fill: url(#cpu-register-rows); }
+.cpu-pipeline-register { fill: #899ca8; }
+.cpu-bus { opacity: var(--cpu-bus); }
+.cpu-datapath { fill: none; stroke: #98abb9; stroke-width: 1.6; }
+.cpu-junctions { fill: #98abb9; }
+.cpu-control-path { fill: none; stroke: #b59c78; stroke-width: 1.2; stroke-dasharray: 4 4; }
+.cpu-io { opacity: var(--cpu-io); }
+.cpu-traces { fill: none; stroke: #68818e; stroke-width: 1.3; opacity: calc(var(--cpu-io) * .65); }
+.cpu-signals { fill: none; stroke: #c0ced7; stroke-width: 1.6; stroke-linecap: butt; }
+.cpu-signals > :is(path, use) { stroke-dasharray: 100 100; stroke-dashoffset: 100; opacity: 0; }
+.cpu-io-signals > use:not(.is-energized) { display: none; }
+.cpu-label-mobile { display: none; }
+
+.chapter--games { --link: #dca979; }
+.chapter--games .chapter-scene { background: #070305; }
+.chapter--games .chapter-art { height: clamp(340px, 66svh, 680px); background: transparent; }
+.chapter--games .chapter-art img { object-fit: contain; mix-blend-mode: screen; }
+.chapter--anime { --ink: #eee0ed; --link: #d9b5d4; }
+.chapter--anime .chapter-scene { background: #17131c; }
+.anime-strip { display: none; position: absolute; inset: 0; background: url("../images/anime/sao.webp") center / cover; pointer-events: none; }
+.anime-strip--left { clip-path: inset(0 66.65% 0 0); }
+.anime-strip--middle { clip-path: inset(0 33.3% 0 33.3%); }
+.anime-strip--right { clip-path: inset(0 0 0 66.6%); }
+
+/* Enhancement only: the unenhanced document always shows its links and artwork. */
+.home-scroll[data-scroll-effects="on"] .chapter { min-height: 150svh; }
+.home-scroll[data-scroll-effects="on"] .chapter-scene { position: sticky; top: 0; }
+
+.home-scroll[data-scroll-effects="on"] .chapter--games .chapter-art {
+  clip-path: inset(calc((1 - var(--reveal)) * 49.9%) 0);
+}
+.home-scroll[data-scroll-effects="on"] .chapter--games .chapter-art img { transform: scale(calc(1.1 - var(--reveal) * .1)); }
+.home-scroll[data-scroll-effects="on"] .chapter--anime .chapter-art { background: none; }
+.home-scroll[data-scroll-effects="on"] .chapter--anime .chapter-art img { opacity: 0; }
+.home-scroll[data-scroll-effects="on"] .anime-strip { display: block; opacity: var(--reveal); }
+.home-scroll[data-scroll-effects="on"] .anime-strip--left { transform: translateY(calc((1 - var(--reveal)) * 160px)); }
+.home-scroll[data-scroll-effects="on"] .anime-strip--middle { transform: translateY(calc((1 - var(--reveal)) * -120px)); }
+.home-scroll[data-scroll-effects="on"] .anime-strip--right { transform: translateY(calc((1 - var(--reveal)) * 220px)); }
+.home-scroll[data-scroll-effects="on"] .chapter--academic { min-height: 200svh; }
+.home-scroll[data-scroll-effects="on"] .cpu-signals > :is(path, use) { animation: circuit-conduct var(--flow-time, 2.6s) linear infinite; animation-delay: var(--phase); animation-play-state: paused; }
+.home-scroll[data-scroll-effects="on"]:not(.is-idle) .chapter--academic.is-current .cpu-signals > :is(path, use) { animation-play-state: running; }
+.home-scroll[data-scroll-effects="on"] .chapter--anime .chapter-backdrop { animation: illustrated-drift 18s ease-in-out infinite alternate; animation-play-state: paused; }
+.home-scroll[data-scroll-effects="on"]:not(.is-idle) .chapter--anime.is-current .chapter-backdrop { animation-play-state: running; }
+@keyframes circuit-conduct {
+  0%, 8% { opacity: 0; stroke-dashoffset: 100; }
+  12% { opacity: var(--conduct-opacity, .7); }
+  42%, 58% { opacity: var(--conduct-opacity, .7); stroke-dashoffset: 0; }
+  78%, 100% { opacity: 0; stroke-dashoffset: 0; }
+}
+@keyframes illustrated-drift { from { transform: translate(-1.5%, 0) scale(1.04); } to { transform: translate(1.5%, -1%) scale(1.06); } }
+/* A keyboard visitor can open the image link without scrolling through an effect. */
+.home-scroll[data-scroll-effects="on"] .chapter:has(a:focus-visible) { --reveal: 1 !important; --scan-opacity: 0 !important; }
+.home-footer { padding: 28px 5vw; background: #17131c; font-size: 12px; }
+.home-footer a { color: #b8aab8; }
+
+@media (max-width: 900px) {
+  .chapter-layout { padding-right: 32px; padding-left: 32px; grid-template-columns: 230px minmax(0, 1fr); gap: 24px; }
+  .chapter h2 { font-size: 30px; }
+  .chapter--academic .chapter-layout { grid-template-columns: 140px minmax(0, 1fr); padding-left: 32px; padding-right: 12px; gap: 10px; }
+}
+@media (max-width: 700px) {
+  .chapter-scene { min-height: 600px; }
+  .chapter-layout { padding: 40px 26px; grid-template-columns: minmax(0, 1fr); gap: 30px; }
+  .chapter h2 { font-size: 28px; }
+  .chapter-art, .chapter--games .chapter-art { width: 100%; height: clamp(300px, 53svh, 500px); }
+  .chapter--academic .chapter-layout { padding: 40px 0; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .chapter--academic h2 { padding: 0 26px; }
+  .chapter--academic .chapter-art { height: clamp(320px, 53svh, 520px); }
+  .cpu-diagram { width: 122%; margin-left: -11%; }
+  .cpu-diagram text { font-size: 32px; }
+  .cpu-diagram .cpu-stage-label { font-size: 27px; }
+  .cpu-diagram .cpu-cover-label { font-size: 50px; }
+  .cpu-label-desktop { display: none; }
+  .cpu-label-mobile { display: initial; }
+  .home-footer { padding: 24px 26px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .terminal-cursor { animation: none !important; }
+  .chapter { min-height: 100svh !important; }
+  .chapter-scene { position: relative !important; }
+  .chapter-art { clip-path: none !important; transform: none !important; }
+  .chapter-art img { opacity: 1 !important; transform: none !important; }
+  .chapter-backdrop, .chapter-backdrop::after { animation: none !important; transform: none !important; }
+  .chapter-atmosphere, .cpu-signals, .anime-strip { display: none !important; }
+}
