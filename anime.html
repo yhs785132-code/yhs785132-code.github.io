@@ -1,22 +1,55 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow"><meta name="description" content="An anime collection featuring Sword Art Online, Re:Zero, Steins;Gate and One-Punch Man."><title>Anime — M. Example</title><link rel="stylesheet" href="assets/css/common.css"><link rel="stylesheet" href="assets/css/anime.css"><link rel="stylesheet" href="assets/css/transitions.css"><script src="assets/js/transitions.js"></script><script src="assets/js/common.js" defer></script><script src="assets/js/anime.js" defer></script></head>
-<body class="night anime-page"><a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header"><div class="header-inner"><a class="site-name" href="index.html" title="Home">M. Example</a><nav class="section-nav" aria-label="Interests"><a href="games.html">Games</a><a href="anime.html" aria-current="page">Anime</a></nav><nav class="world-nav" aria-label="Site mode"><a href="academic.html" title="Academic profile"><svg class="world-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="assets/icons/interface.svg#sun"></use></svg>Day</a><a href="anime.html" aria-current="page" title="Games and anime"><svg class="world-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><use href="assets/icons/interface.svg#moon"></use></svg>Night</a></nav></div></header><div class="world-content">
-<div class="anime-banner"><img src="assets/images/anime/anime.webp" alt="An ensemble of anime characters" width="1920" height="1204" fetchpriority="high"></div>
-<div class="anime-layout"><aside class="anime-sidebar" aria-label="Anime collection"><h1>Anime</h1><label class="sr-only" for="work-filter">Filter anime</label><select id="work-filter"><option value="all">All series</option><option value="science">Science fiction</option><option value="fantasy">Fantasy</option><option value="action">Action</option><option value="saved">Saved</option></select>
-<div class="series-list" role="group" aria-label="Choose a series">
-<button type="button" data-work="sao" data-category="science action" aria-pressed="true"><img src="assets/images/anime/sao-thumb.webp" width="52" height="64" alt=""><span>Sword Art Online</span></button>
-<button type="button" data-work="re0" data-category="fantasy" aria-pressed="false"><img src="assets/images/anime/re0-thumb.webp" width="52" height="64" alt=""><span>Re:Zero</span></button>
-<button type="button" data-work="steinsgate" data-category="science" aria-pressed="false"><img src="assets/images/anime/steinsgate-thumb.webp" width="52" height="64" alt=""><span>Steins;Gate</span></button>
-<button type="button" data-work="onepunch" data-category="action" aria-pressed="false"><img src="assets/images/anime/onepunch-thumb.webp" width="52" height="64" alt=""><span>One-Punch Man</span></button>
-</div><p id="filter-status" role="status" class="sr-only">4 series</p><p id="empty-saved" class="empty-message" hidden>No saved series yet.</p></aside>
-<main id="main" class="anime-main">
-<article id="feature" class="anime-article" data-format="wide"><div class="article-heading"><h2 id="feature-title">Sword Art Online</h2><button type="button" id="save-series" aria-pressed="false">Save</button></div><div class="article-body"><button class="poster-button" id="open-poster" type="button" aria-label="Enlarge Sword Art Online artwork"><img id="feature-image" src="assets/images/anime/sao.webp" alt="Sword Art Online character artwork" width="1920" height="1080"></button><div class="article-copy"><p class="genres" id="feature-genres">Science fiction / Adventure</p><p id="feature-description">Kirito and Asuna meet inside a virtual world where the rules of a game have become a matter of survival. The story follows the people and relationships that remain after the game changes.</p><a id="official-link" href="https://www.swordart-online.net/" target="_blank" rel="noopener noreferrer">Official website ↗</a></div></div></article>
-<section class="soundtrack" aria-labelledby="music-heading"><h2 id="music-heading">Soundtrack</h2><div class="audio-panel"><label class="sr-only" for="anime-music">Choose a track</label><select id="anime-music" data-audio-select="anime-audio"><option value="assets/audio/anime/crossing-field.mp3">crossing field — LiSA</option><option value="assets/audio/anime/styx-helix.mp3">STYX HELIX — MYTH &amp; ROID</option></select><audio id="anime-audio" controls preload="none" aria-label="Anime music" src="assets/audio/anime/crossing-field.mp3"></audio></div></section>
-<p class="save-status" id="save-status" role="status"></p>
-</main></div>
-<footer class="site-footer"><a href="design.html#sources">Artwork &amp; sources</a><a href="games.html">← Game library</a></footer></div>
-<dialog id="poster-dialog" aria-label="Anime artwork"><button class="dialog-close" data-close type="button">Close</button><figure><img id="dialog-poster" src="assets/images/anime/sao.webp" alt="Sword Art Online character artwork"><figcaption id="poster-caption">Sword Art Online</figcaption></figure></dialog>
-</body></html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+<meta name="description" content="A personal anime collection: favorites, watched titles and unfinished series.">
+<title>Anime — M. Example</title>
+<link rel="stylesheet" href="assets/css/common.css"><link rel="stylesheet" href="assets/css/anime-fonts.css"><link rel="stylesheet" href="assets/css/anime.css"><link rel="stylesheet" href="assets/css/transitions.css">
+<script src="assets/js/transitions.js"></script><script src="assets/js/common.js" defer></script><script src="assets/js/anime-browser.js" defer></script>
+</head>
+<body class="night anime-page">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><div class="header-inner"><a class="site-name" href="index.html" title="Home">M. Example</a><nav class="section-nav" aria-label="Interests"><a href="games.html">Games</a><a href="anime.html" aria-current="page">Anime</a></nav><nav class="world-nav" aria-label="Site mode"><a href="academic.html" title="Academic profile"><svg class="world-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M184,128a56,56,0,1,1-56-56A56,56,0,0,1,184,128Z" opacity="0.2"/><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></svg>Day</a><a href="anime.html" aria-current="page" title="Games and anime"><svg class="world-icon" viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path d="M227.89,147.89A96,96,0,1,1,108.11,28.11,96.09,96.09,0,0,0,227.89,147.89Z" opacity="0.2"/><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"/></svg>Night</a></nav></div></header>
+<div class="world-content">
+<div class="anime-banner"><img src="assets/images/anime/anime.webp" alt="An ensemble of anime characters" width="1920" height="1204" fetchpriority="high"><div class="banner-title"><h1>Anime</h1></div></div>
+<div class="anime-layout">
+<aside class="anime-sidebar" aria-label="Collection filters">
+  <nav class="shelf-nav" aria-label="Collection">
+    <button type="button" data-shelf="favorites" aria-pressed="true">Favorites</button>
+    <button type="button" data-shelf="watched" aria-pressed="false">Watched</button>
+    <button type="button" data-shelf="unfinished" aria-pressed="false">Unfinished</button>
+  </nav>
+  <details class="browse-filters">
+    <summary>Filters</summary>
+    <div class="filter-panel">
+    <div class="filter-field"><label for="origin-filter">Origin</label><select id="origin-filter"><option value="all">All origins</option><option value="JP">Japanese</option><option value="CN">Chinese · Donghua</option></select></div>
+    <div class="filter-field"><label for="topic-filter">Genre</label><select id="topic-filter"><option value="all">All genres</option></select></div>
+    <div class="filter-field"><label for="year-filter">Release year</label><select id="year-filter"><option value="all">All years</option></select></div>
+    <div class="filter-field"><label for="format-filter">Format</label><select id="format-filter"><option value="all">All formats</option><option value="tv">TV</option><option value="movie">Movies</option><option value="web">Web series</option><option value="ova">OVA / OAD</option></select></div>
+    <button class="reset-filters" id="reset-filters" type="button">Clear filters</button>
+    </div>
+  </details>
+  <details class="soundtrack"><summary>Soundtrack</summary><div class="audio-panel"><label class="sr-only" for="anime-music">Choose a track</label><select id="anime-music" data-audio-select="anime-audio"><option value="assets/audio/anime/crossing-field.mp3">crossing field — LiSA</option><option value="assets/audio/anime/styx-helix.mp3">STYX HELIX — MYTH &amp; ROID</option></select><audio id="anime-audio" controls preload="none" aria-label="Anime music" src="assets/audio/anime/crossing-field.mp3"></audio></div></details>
+</aside>
+<main id="main" class="anime-main" tabindex="-1">
+  <div class="collection-heading"><div><h2 id="shelf-heading">Favorites</h2><p id="result-count" class="sr-only" role="status" aria-live="polite">Loading collection…</p></div><div class="collection-search"><label class="sr-only" for="anime-search">Search titles</label><input id="anime-search" type="search" placeholder="Search titles…" autocomplete="off" spellcheck="false"><button type="button" id="clear-search" aria-label="Clear search" hidden>×</button></div></div>
+  <div class="collection-toolbar"><label>View <select id="view-mode"><option value="series">By series</option><option value="entries">Individual entries</option></select></label><label>Sort <select id="sort-mode"><option value="title">Title A–Z</option><option value="newest">Newest first</option><option value="oldest">Oldest first</option></select></label></div>
+  <div id="collection-grid" class="collection-grid" aria-labelledby="shelf-heading"></div>
+  <div id="collection-empty" class="collection-empty" hidden><h3>No matching titles</h3><p id="empty-description">Try another title or clear the filters.</p><button id="empty-reset" type="button">Clear filters</button><button id="show-watched" type="button">Browse watched</button></div>
+  <div id="collection-error" class="collection-empty" role="alert" hidden><h3>The collection could not be loaded.</h3><p>Keep the assets folder beside this page, then reopen it.</p><button id="retry-load" type="button">Try again</button></div>
+  <noscript><p>This collection needs JavaScript to show the saved titles and filters.</p></noscript>
+  <nav class="collection-pagination" aria-label="Collection pages" hidden><button id="previous-page" type="button">← Previous</button><span id="page-count"></span><button id="next-page" type="button">Next →</button></nav>
+</main>
+</div>
+<footer class="site-footer"><a href="design.html#sources">Artwork &amp; sources</a><a href="games.html">← Game library</a></footer>
+</div>
+<dialog id="series-dialog" aria-labelledby="detail-title">
+  <div class="detail-topbar"><button class="dialog-close" data-close type="button" aria-label="Close">×</button></div>
+  <div class="detail-intro"><img id="detail-cover" alt="" width="160" height="240"><div><h2 id="detail-title"></h2><p id="detail-meta"></p></div></div>
+  <div id="detail-stories" class="detail-stories"></div>
+  <details id="detail-releases" class="detail-releases"><summary>In my collection</summary><div id="detail-entries" class="detail-entries"></div></details>
+</dialog>
+</body>
+</html>
